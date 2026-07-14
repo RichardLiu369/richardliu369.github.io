@@ -259,11 +259,11 @@
     .hero-desc .serif-inline { font-family: var(--font-serif); font-style: italic; color: var(--coral); font-size: 1.1em; }
 
     .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-primary { padding: 16px 28px; background: var(--ink); color: var(--bg); border-radius: 999px; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; transition: background .25s, transform .25s; position: relative; overflow: hidden; }
+    .btn-primary { padding: 14px 22px; background: var(--ink); color: var(--bg); border-radius: 999px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: background .25s, transform .25s; position: relative; overflow: hidden; white-space: nowrap; }
     .btn-primary:hover { background: var(--coral); transform: translateY(-2px); }
     .btn-primary .arrow { transition: transform .25s; }
     .btn-primary:hover .arrow { transform: translateX(4px); }
-    .btn-ghost { padding: 16px 28px; background: var(--bg-card); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 999px; font-weight: 600; font-size: 15px; transition: background .25s, border-color .25s; }
+    .btn-ghost { padding: 14px 22px; background: var(--bg-card); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 999px; font-weight: 600; font-size: 14px; transition: background .25s, border-color .25s; white-space: nowrap; }
     .btn-ghost:hover { background: var(--bg-soft); border-color: var(--ink); }
 
     /* HERO PLATFORM ORBIT — semantic visualization of Richard's actual platform stack */
@@ -985,25 +985,25 @@
           <span class="word violet">.</span>
         </h1>
         <p class="hero-desc">
-          在 <strong>NARAKA: BLADEPOINT</strong>(网易雷火)做海外营销。搭内容系统、做社群运营、跑 <span class="serif-inline">AI workflows</span>,让全球玩家真正感受到内容的价值。
+          22 岁,澳门大学英语研究硕士。三段游戏 / 社媒 / 学术实习,跑 <span class="serif-inline">AI-native</span> 内容管线 —— 让一个市场人顶三个人的活。
         </p>
         <div class="hero-cta">
-          <a class="btn-primary magnetic" href="#work">看我的作品 <span class="arrow">→</span></a>
+          <a class="btn-primary magnetic" href="#experience">看我的经历 <span class="arrow">→</span></a>
           <a class="btn-ghost magnetic" href="#contact">联系合作</a>
         </div>
       </div>
 
       <div class="hero-visual" id="heroVisual">
         <div class="hero-platform-orbit" id="heroOrbit">
-          <!-- Center: NARAKA brand hub -->
+          <!-- Center: "GAME" identity hub (综合身份, not tied to one product) -->
           <div class="orbit-hub">
-            <div class="orbit-hub-inner">NARAKA</div>
+            <div class="orbit-hub-inner">GAME<br><span style="font-size:9px;font-weight:600;letter-spacing:0.12em;opacity:.85;display:block;margin-top:3px">×  AI</span></div>
             <div class="orbit-hub-ring"></div>
           </div>
-          <!-- 4 orbiting platforms — Richard's actual stack -->
-          <div class="orbit-platform" data-platform="Reddit" style="--angle: 0deg;">
+          <!-- 4 orbiting platforms — Richard's actual operational stack (Facebook/Discord/YouTube/X) -->
+          <div class="orbit-platform" data-platform="Facebook" style="--angle: 0deg;">
             <div class="orbit-platform-dot"></div>
-            <div class="orbit-platform-label">Reddit</div>
+            <div class="orbit-platform-label">Facebook</div>
           </div>
           <div class="orbit-platform" data-platform="Discord" style="--angle: 90deg;">
             <div class="orbit-platform-dot"></div>
@@ -1025,8 +1025,8 @@
           </svg>
         </div>
         <div class="hero-stats">
-          <strong>04</strong>
-          platforms · 1 mission
+          <strong>4</strong>
+          platforms · 综合叙事
         </div>
       </div>
     </div>
@@ -1071,7 +1071,7 @@
       </h2>
     </div>
     <p class="section-meta">
-      澳门大学英语研究硕士(语言学方向)。三段游戏营销实习,横跨电竞、移动 RPG、PC 动作游戏。搭 AI-native workflow,把内容生产从 1x 变成 10x 命题。
+      22 岁,澳门大学英语研究硕士 + 上海海洋大学工商管理 / 英语双学位。三段游戏 / 社媒 / 学术实习,跑 AI-native workflow。
     </p>
   </div>
 
@@ -1081,87 +1081,88 @@
 
     <div class="about-grid">
       <div class="about-text" id="aboutText">
-        <span class="line">独立运营 <span class="highlight">Reddit</span> 社区、写英文文案,为全球玩家落地创意 campaign。</span>
-        <span class="line">同时搭 <span class="violet-bg">AI workflows</span>,让一个市场人顶三个人用 —— 调研、文案、视觉、视频,一条流水线全打通。</span>
-        <span class="line">目前在 <span class="highlight">网易雷火(NetEase Leihuo)</span> 负责 NARAKA: BLADEPOINT 永劫无间的海外营销。一直在找下一款值得死磕进去的<span class="serif-inline">有意思</span>的游戏。</span>
+        <span class="line">本科双学位(工商管理 + 英语)+ 澳大语言学硕士,语言是基本盘,商业是底层逻辑。雅思 7.0、CATTI 三级笔译,中英双语可作工作语言。</span>
+        <span class="line">三段实习,跨度大但内核一致 —— <span class="highlight">游族网络</span>(《圣斗士星矢:觉醒》+《援军来了》海外社媒)、<span class="highlight">英雄电竞</span>(PGS 赛事海外内容)、<span class="highlight">数字平台文化研究</span>(硕士论文方向)。</span>
+        <span class="line">搭了一套 <span class="violet-bg">AI 工作流</span>:Claude Code / Codex 跑调研和文案, GPT Image 2 / NanoBanana 出视觉, Seedance 出视频。 让一个市场人顶三个人的活。</span>
+        <span class="line">长期深度玩 <span class="serif-inline">FPS</span>、手游商业化、3A 叙事驱动 —— 因为相信:玩得深,创意直觉才到位。</span>
       </div>
 
       <div class="about-stats">
         <div class="about-stat">
           <div class="num coral" data-count="3">0</div>
-          <div class="label">游戏厂商</div>
+          <div class="label">段实习 / 项目</div>
         </div>
         <div class="about-stat">
-          <div class="num violet" data-count="5">0</div>
-          <div class="label">掌握的平台</div>
+          <div class="num violet" data-count="4">0</div>
+          <div class="label">主战场平台</div>
         </div>
         <div class="about-stat">
-          <div class="num mint" data-count="20">0</div>
-          <div class="label">触达玩家(百万)</div>
+          <div class="num mint" data-count="26">0</div>
+          <div class="label">条 PGS Shorts</div>
         </div>
         <div class="about-stat">
           <div class="num" data-count="7">0</div>
-          <div class="label">IELTS · 中英双语</div>
+          <div class="label">IELTS · 中英</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cases" id="work">
+<section class="cases" id="experience">
   <div class="chapter-marker" aria-hidden="true">
     <span class="num">02 / 04</span>
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">精选作品</div>
+      <div class="section-label">经历</div>
       <h2 class="section-title" data-split>
-        近期 <span class="serif">项目</span>,以及背后的故事。
+        三段 <span class="serif">实习</span>,一个研究项目。
       </h2>
     </div>
     <p class="section-meta">
-      四个 case study,覆盖海外营销、电竞内容、创作者生态、学术研究可视化。
+      从社媒运营到赛事内容,再到学术研究 —— 每段都跟游戏相关,但角度不同。
     </p>
   </div>
 
     <div class="case-card-grid">
-      <a class="case-card magnetic" href="naraka-case.html">
+      <a class="case-card magnetic" href="#">
         <div class="case-card-image">
           <div class="geo-blob-card"></div>
           <div class="tags-overlay">
-            <span>Reddit</span><span>Creative</span><span>5th Anniv</span>
+            <span>Facebook</span><span>Discord</span><span>AI Workflow</span>
           </div>
           <div class="view-btn">VIEW →</div>
         </div>
         <div class="case-card-meta">
-          <div class="case-card-title">NARAKA <span class="serif">×</span> 海外营销</div>
-          <div class="case-card-period">2026.06 — 至今</div>
+          <div class="case-card-title">游族网络 <span class="serif">×</span> 海外社媒</div>
+          <div class="case-card-period">2026.05 — 至今</div>
         </div>
-        <p class="case-card-sub">Reddit 独立运营 · 舆情监控 · 五周年营销 · NARAKA: BLADEPOINT 全球玩家创意概念。</p>
+        <p class="case-card-sub">负责《圣斗士星瞲:觉醒》(欧美)与《援军来了》(港澳台)的 Facebook 社媒运营、Discord 社区管理、KOL 创作者生态、AI 内容生产管线。</p>
         <div class="case-card-stats">
-          <span><strong>4</strong><small>核心任务</small></span>
-          <span><strong>5+</strong><small>平台</small></span>
+          <span><strong>2</strong><small>产品线</small></span>
+          <span><strong>4</strong><small>海外平台</small></span>
           <span><strong>EN/CN</strong><small>双语</small></span>
         </div>
       </a>
 
-      <a class="case-card magnetic" href="#">
+      <a class="case-card magnetic" href="naraka-case.html">
         <div class="case-card-image violet">
           <div class="geo-blob-card"></div>
           <div class="tags-overlay">
-            <span>Discord</span><span>KOL</span><span>UGC</span>
+            <span>永劫无间</span><span>创意</span><span>五周年</span>
           </div>
           <div class="view-btn">VIEW →</div>
         </div>
         <div class="case-card-meta">
-          <div class="case-card-title">Saint Seiya <span class="serif">×</span> Discord</div>
-          <div class="case-card-period">2026.05 — 2026.06</div>
+          <div class="case-card-title">NARAKA <span class="serif">×</span> 创意概念</div>
+          <div class="case-card-period">过往 case</div>
         </div>
-        <p class="case-card-sub">创作者生态 · 舆情监控 · 移动 RPG 首发 UGC 流水线。</p>
+        <p class="case-card-sub">永劫无间五周年创意概念、新地图视频脚本、社媒运营 —— 详细 case 见单独页面。</p>
         <div class="case-card-stats">
-          <span><strong>Discord</strong><small>社区</small></span>
-          <span><strong>YouTube</strong><small>KOL</small></span>
-          <span><strong>Live</strong><small>运营</small></span>
+          <span><strong>4</strong><small>核心任务</small></span>
+          <span><strong>2</strong><small>视频脚本</small></span>
+          <span><strong>EN/CN</strong><small>双语</small></span>
         </div>
       </a>
 
@@ -1169,19 +1170,19 @@
         <div class="case-card-image mint">
           <div class="geo-blob-card"></div>
           <div class="tags-overlay">
-            <span>Esports</span><span>Shorts</span><span>Live</span>
+            <span>电竞</span><span>Shorts</span><span>直播</span>
           </div>
           <div class="view-btn">VIEW →</div>
         </div>
         <div class="case-card-meta">
-          <div class="case-card-title">PGS <span class="serif">×</span> 电竞</div>
+          <div class="case-card-title">英雄电竞 <span class="serif">×</span> PGS 赛事</div>
           <div class="case-card-period">2025.03 — 2025.06</div>
         </div>
-        <p class="case-card-sub">YouTube Shorts 系列 · 33.5 万播放 · 和平精英联赛赛季直播运营。</p>
+        <p class="case-card-sub">YouTube Shorts 系列 + Twitter / Discord 双平台赛事运营,53 小时直播,PGS 7 创该系列 34 万历史最高观看。</p>
         <div class="case-card-stats">
-          <span><strong>26</strong><small>Shorts</small></span>
+          <span><strong>26</strong><small>条 Shorts</small></span>
           <span><strong>335K</strong><small>播放</small></span>
-          <span><strong>9</strong><small>赛事</small></span>
+          <span><strong>53H</strong><small>直播</small></span>
         </div>
       </a>
 
@@ -1189,19 +1190,19 @@
         <div class="case-card-image ink">
           <div class="geo-blob-card"></div>
           <div class="tags-overlay">
-            <span>Research</span><span>Data Viz</span><span>NLP</span>
+            <span>研究</span><span>数据可视化</span><span>NLP</span>
           </div>
           <div class="view-btn">VIEW →</div>
         </div>
         <div class="case-card-meta">
-          <div class="case-card-title">HHNL <span class="serif">×</span> 学术研究</div>
+          <div class="case-card-title">数字平台 <span class="serif">×</span> 文化研究</div>
           <div class="case-card-period">2026.02 — 2026.04</div>
         </div>
-        <p class="case-card-sub">数据可视化 · AI agent 抓取 · 澳大硕士论文交互叙事(港媒研究方向)。</p>
+        <p class="case-card-sub">嘻哈文化主流化周期研究(澳大硕士论文方向),用 AI agent 抓 TikTok / Twitter 语料,独立开发交互式数据可视化网页。</p>
         <div class="case-card-stats">
-          <span><strong>9</strong><small>面板</small></span>
+          <span><strong>10×</strong><small>周期压缩</small></span>
+          <span><strong>5</strong><small>模块</small></span>
           <span><strong>Vibe</strong><small>编程</small></span>
-          <span><strong>2026</strong><small>论文</small></span>
         </div>
       </a>
     </div>
@@ -1249,7 +1250,7 @@
           <span class="step-num">// 01</span>
           <div>
             <h3>IP 与竞品 <span class="serif">情报</span></h3>
-            <p>用 Claude Code agents 抓 Reddit、X、Steam、官方频道,扫 IP lore、玩家情绪、竞品动作。</p>
+            <p>用 Claude Code / Codex agents 抓 圣斗士 IP 词典、竞品社媒动态、玩家舆情关键词,为内容选题提供策略参考。</p>
             <div class="tools">
               <span class="tool">Claude Code</span>
               <span class="tool">Codex</span>
@@ -1261,7 +1262,7 @@
           <span class="step-num">// 02</span>
           <div>
             <h3>中英 <span class="serif">文案</span></h3>
-            <p>按平台生成中英双语文案 —— X 推文、Reddit 长贴、Discord 公告,各有调性。</p>
+            <p>为 Facebook / Twitter / Discord / YouTube 针对性生成双语变体 —— 圣斗士社区公告、PGS 赛事推文、作者欢迎词,各对各的调性。</p>
             <div class="tools">
               <span class="tool">Claude</span>
               <span class="tool">GPT-4</span>
@@ -1272,8 +1273,8 @@
         <div class="ai-step">
           <span class="step-num">// 03</span>
           <div>
-            <h3>主视觉与<span class="serif">海报</span></h3>
-            <p>概念图、海报、社媒卡 —— 用分钟级迭代,替代过去按天算的美术流程。</p>
+            <h3>主视觉与<span class="serif">社媒卡</span></h3>
+            <p>圣斗士 / 援军来了 社媒卡、概念海报 —— 分钟级迭代,更快、更低成本、更能试错。</p>
             <div class="tools">
               <span class="tool">GPT Image 2</span>
               <span class="tool">NanoBanana Pro</span>
@@ -1284,8 +1285,8 @@
         <div class="ai-step">
           <span class="step-num">// 04</span>
           <div>
-            <h3>短视频 <span class="serif">Demo</span></h3>
-            <p>15-30 秒动态 demo,用于方案 pitch、内部对齐、创作者 brief。</p>
+            <h3>PGS 赛事 <span class="serif">Shorts</span></h3>
+            <p>15-30 秒选手问答 / 二创剪辑 / 赛场花素 三档差异化栏目,26 条累计 33.5 万播放。</p>
             <div class="tools">
               <span class="tool">Seedance 2.0</span>
               <span class="tool">Runway</span>
@@ -1298,18 +1299,18 @@
       <aside class="ai-summary">
         <div class="label">/ 为什么这很关键</div>
         <h3>一个 <span class="serif">市场人</span>,干三个人的活。</h3>
-        <p>这套流水线不是玩具 —— 它能上生产:更快的迭代、更多 A/B 变体、更少被设计排期卡住。</p>
+        <p>这套管线不是玩具 —— 能上生产:更快的迭代、更多 A/B 变体、更少被设计、译者、外注排期卡住。</p>
         <div class="metric">
           <span class="n">~10×</span>
           <span class="l">创意迭代速度</span>
         </div>
         <div class="metric">
-          <span class="n">3+</span>
-          <span class="l">语种 / 周</span>
+          <span class="n">4</span>
+          <span class="l">个货一套管线</span>
         </div>
         <div class="metric">
           <span class="n">0</span>
-          <span class="l">等设计的死线</span>
+          <span class="l">等设计 / 译者</span>
         </div>
       </aside>
     </div>
@@ -1322,62 +1323,62 @@
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">我玩什么</div>
+      <div class="section-label">游戏行业认知</div>
       <h2 class="section-title" data-split>
-        不只是<span class="serif">做</span>游戏营销 —— 我自己也重度沉迷。
+        玩得<span class="serif">深</span>,才能做出让玩家真的买单的东西。
       </h2>
     </div>
     <p class="section-meta">
-      近期游戏时长抽样。玩得深,创意直觉和玩家共情自然就到位。
+      长期深度参与四大子品类的游戏生态,累计 2500+ 小时。每个品类的赛事结构、社区文化、商业化逻辑都不一样。
     </p>
   </div>
 
     <div class="games-grid">
       <div class="game-cell">
-        <span class="g-tag">CURRENT</span>
+        <span class="g-tag">FPS · 战术射击</span>
         <div>
-          <div class="g-name">NARAKA</div>
-          <div class="g-meta">200+ hrs</div>
+          <div class="g-name">CS / VALORANT</div>
+          <div class="g-meta">战术 + 团队 + 赛事生态</div>
         </div>
       </div>
       <div class="game-cell">
-        <span class="g-tag">FPS</span>
+        <span class="g-tag">BR · 大逃杀</span>
         <div>
-          <div class="g-name">Valorant</div>
-          <div class="g-meta">800+ hrs</div>
+          <div class="g-name">PUBG / APEX / 三角洲</div>
+          <div class="g-meta">节奏 + 团队配合</div>
         </div>
       </div>
       <div class="game-cell">
-        <span class="g-tag">OPEN WORLD</span>
+        <span class="g-tag">手游商业化</span>
         <div>
-          <div class="g-name">Genshin</div>
-          <div class="g-meta">600+ hrs</div>
+          <div class="g-name">哈利波特 · 炉石 · CODM</div>
+          <div class="g-meta">卡牌 / 竞技 / 通行证</div>
         </div>
       </div>
       <div class="game-cell">
-        <span class="g-tag">BR</span>
+        <span class="g-tag">英雄射击</span>
         <div>
-          <div class="g-name">PUBG</div>
-          <div class="g-meta">1k+ hrs</div>
+          <div class="g-name">Overwatch / 漫威争锋</div>
+          <div class="g-meta">英雄机制 + 平衡</div>
         </div>
       </div>
       <div class="game-cell">
-        <span class="g-tag">ACTION</span>
+        <span class="g-tag">3A · 叙事</span>
         <div>
-          <div class="g-name">Apex</div>
-          <div class="g-meta">300+ hrs</div>
+          <div class="g-name">黑神话 · GTA · 赛博朋克</div>
+          <div class="g-meta">剧情驱动 + 长线</div>
         </div>
       </div>
       <div class="game-cell">
-        <span class="g-tag">MMO</span>
+        <span class="g-tag">小众竞技</span>
         <div>
-          <div class="g-name">Honkai</div>
-          <div class="g-meta">200+ hrs</div>
+          <div class="g-name">黎明杀机 · 荒野乱斗</div>
+          <div class="g-meta">非对称 + 短局</div>
         </div>
       </div>
     </div>
 
-    <div class="games-cta">// 还有几十款没列出来 —— 欢迎随时来聊</div>
+    <div class="games-cta">// IP 改编 · 卡牌 RPG · 竞技手游 · 跨品类视野 —— 简历里聊</div>
   </div>
 </section>
 
@@ -1430,7 +1431,11 @@
         </a>
       </div>
       <div class="footer-col">
-        <h4>所在地</h4>
+        <h4>当前 / 所在地</h4>
+        <a class="footer-link" href="#" onclick="return false;">
+          <strong>游族网络</strong>
+          海外社媒运营实习
+        </a>
         <a class="footer-link" href="#" onclick="return false;">
           <strong>澳门</strong>
           澳门大学在读
@@ -1447,7 +1452,7 @@
       <div class="footer-col">
         <h4>本站</h4>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>v5.1</strong>
+          <strong>v5.2</strong>
           July 2026
         </a>
         <a class="footer-link" href="#" onclick="return false;">
@@ -1805,44 +1810,96 @@
           { name: 'Video',    tool: 'Seedance 2.0 + Runway',    x:  3, color: 0xf59e0b }, // amber
         ];
         const nodes = [];
-        // Clean low-poly icosahedron spheres with subtle glow — readable, not bizarre
-        const icoGeo = new THREE.IcosahedronGeometry(0.6, 2);
-        const wireGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(0.62, 2));
+        // Semantic 3D shapes per AI step — each geometry visually maps to its function:
+        //   Research (调研) → sphere + data points orbiting (data collection)
+        //   Copy (文案)     → solid cube (text block)
+        //   Art (视觉)      → 3 stacked planes (layered canvas)
+        //   Video (视频)    → triangle cone (play button)
+        const makeMat = (color, opacity = 0.95) => new THREE.MeshBasicMaterial({
+          color, transparent: true, opacity,
+        });
+        const accentMat = (color) => new THREE.LineBasicMaterial({
+          color, transparent: true, opacity: 0.7,
+        });
+
+        const buildResearchNode = (color) => {
+          const group = new THREE.Group();
+          // Core sphere
+          const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.55, 2), makeMat(color));
+          group.add(core);
+          // Orbiting data points (12 around the sphere) — visualizes "data scraping"
+          const dotCount = 12;
+          for (let k = 0; k < dotCount; k++) {
+            const angle = (k / dotCount) * Math.PI * 2;
+            const r = 1.0;
+            const dot = new THREE.Mesh(
+              new THREE.SphereGeometry(0.06, 8, 8),
+              makeMat(color, 0.85)
+            );
+            dot.position.set(Math.cos(angle) * r, Math.sin(angle) * r, 0);
+            dot.userData.orbit = { angle, r, speed: 0.4 + (k % 3) * 0.15 };
+            group.add(dot);
+          }
+          return group;
+        };
+
+        const buildCopyNode = (color) => {
+          const group = new THREE.Group();
+          // A text block: rounded box
+          const box = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.4, 0.35), makeMat(color));
+          group.add(box);
+          // Three "text lines" on the front (small white-ish thin planes)
+          for (let k = 0; k < 3; k++) {
+            const line = new THREE.Mesh(
+              new THREE.PlaneGeometry(0.8, 0.08),
+              new THREE.MeshBasicMaterial({ color: 0xfaf8f3, transparent: true, opacity: 0.85 })
+            );
+            line.position.set(0, 0.4 - k * 0.3, 0.18);
+            group.add(line);
+          }
+          return group;
+        };
+
+        const buildArtNode = (color) => {
+          const group = new THREE.Group();
+          // 3 stacked offset planes — visualizes "layered creative canvas"
+          const offsets = [
+            { x: 0,    y: 0,    z: 0,    w: 1.2, h: 1.2, op: 1.0  },
+            { x: 0.18, y: 0.18, z: 0.05, w: 0.9, h: 0.9, op: 0.75 },
+            { x: 0.32, y: 0.32, z: 0.1,  w: 0.55, h: 0.55, op: 0.55 },
+          ];
+          offsets.forEach(o => {
+            const p = new THREE.Mesh(new THREE.PlaneGeometry(o.w, o.h), makeMat(color, o.op));
+            p.position.set(o.x, o.y, o.z);
+            group.add(p);
+          });
+          return group;
+        };
+
+        const buildVideoNode = (color) => {
+          const group = new THREE.Group();
+          // Triangle pointing right (play icon), 3D extruded as a thin prism
+          const triShape = new THREE.Shape();
+          triShape.moveTo(-0.45, -0.55);
+          triShape.lineTo(-0.45, 0.55);
+          triShape.lineTo(0.7, 0);
+          triShape.lineTo(-0.45, -0.55);
+          const extrudeSettings = { depth: 0.3, bevelEnabled: false };
+          const geom = new THREE.ExtrudeGeometry(triShape, extrudeSettings);
+          geom.translate(0, 0, -0.15);
+          const tri = new THREE.Mesh(geom, makeMat(color));
+          group.add(tri);
+          return group;
+        };
+
+        const nodeBuilders = [buildResearchNode, buildCopyNode, buildArtNode, buildVideoNode];
 
         nodeData.forEach((d, i) => {
-          // Solid color core
-          const mat = new THREE.MeshStandardMaterial({
-            color: d.color,
-            roughness: 0.35,
-            metalness: 0.25,
-            emissive: d.color,
-            emissiveIntensity: 0.18,
-            transparent: true,
-            opacity: 0.95,
-          });
-          const mesh = new THREE.Mesh(icoGeo, mat);
-          mesh.position.set(d.x, 0, 0);
-          mesh.userData = { name: d.name, tool: d.tool, baseX: d.x, idx: i, color: d.color };
-          aiScene.add(mesh);
-
-          // Subtle wireframe overlay for a refined "data" feel
-          const wire = new THREE.LineSegments(
-            wireGeo,
-            new THREE.LineBasicMaterial({ color: d.color, transparent: true, opacity: 0.45 })
-          );
-          mesh.add(wire);
-
-          // Soft outer halo (slightly larger semi-transparent sphere)
-          const haloMat = new THREE.MeshBasicMaterial({
-            color: d.color,
-            transparent: true,
-            opacity: 0.12,
-            side: THREE.BackSide,
-          });
-          const halo = new THREE.Mesh(new THREE.IcosahedronGeometry(0.85, 2), haloMat);
-          mesh.add(halo);
-
-          nodes.push(mesh);
+          const group = nodeBuilders[i](d.color);
+          group.position.set(d.x, 0, 0);
+          group.userData = { name: d.name, tool: d.tool, baseX: d.x, idx: i, color: d.color };
+          aiScene.add(group);
+          nodes.push(group);
         });
 
         // Curved connection lines between nodes (3 connections)
@@ -1929,11 +1986,26 @@
             n.rotation.y += 0.005;
             n.rotation.x += 0.003;
             n.position.y = Math.sin(performance.now() * 0.001 + i * 1.2) * 0.12;
-            // Active node = brighter
+            // Active node = brighter — iterate children to fade all sub-meshes
             const distToCam = Math.abs(n.userData.baseX - camX);
             const activeFactor = Math.max(0, 1 - distToCam / 1.5);
-            n.material.opacity = 0.6 + activeFactor * 0.4;
-            n.scale.setScalar(1 + activeFactor * 0.25);
+            n.children.forEach(child => {
+              if (child.material && child.material.opacity !== undefined) {
+                // Keep accent/text lines (white-ish) stable, only fade main colored meshes
+                if (child.material.color && child.material.color.r !== 0.98) {
+                  const base = 0.85;
+                  child.material.opacity = base + activeFactor * 0.15;
+                }
+              }
+              // Animate Research node's orbiting data points
+              if (child.userData.orbit) {
+                const o = child.userData.orbit;
+                o.angle += 0.01 * o.speed;
+                child.position.x = Math.cos(o.angle) * o.r;
+                child.position.y = Math.sin(o.angle) * o.r;
+              }
+            });
+            n.scale.setScalar(1 + activeFactor * 0.18);
           });
 
           // Animate flow particles along curves
