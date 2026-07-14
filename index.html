@@ -837,10 +837,9 @@
     .ai-canvas-overlay {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 32px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 28px;
       pointer-events: none;
       color: var(--ink);
       z-index: 2;
@@ -853,30 +852,39 @@
       text-transform: uppercase;
     }
     .ai-canvas-overlay .stage-caption {
-      max-width: 420px;
+      align-self: end;
+      justify-self: start;
+      max-width: min(380px, 60%);
+      background: rgba(250, 248, 243, 0.82);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      padding: 16px 20px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
     }
     .ai-canvas-overlay .stage-caption .k {
       font-family: var(--font-mono);
       font-size: 10px;
-      color: var(--muted);
+      color: var(--coral);
       letter-spacing: .18em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      font-weight: 700;
     }
     .ai-canvas-overlay .stage-caption .v {
       font-family: var(--font-display);
-      font-size: clamp(24px, 2.6vw, 36px);
+      font-size: clamp(18px, 1.8vw, 24px);
       font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.025em;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
       color: var(--ink);
     }
     .ai-canvas-overlay .stage-caption .v .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
     .ai-canvas-overlay .stage-caption small {
       display: block;
-      margin-top: 10px;
+      margin-top: 6px;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       letter-spacing: .04em;
     }
@@ -1799,15 +1807,15 @@
         };
         sizeAI();
         const aiScene = new THREE.Scene();
-        const aiCamera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-        aiCamera.position.set(0, 0, 6);
+        const aiCamera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+        aiCamera.position.set(0, 0.5, 8);
 
         // The 4 actual AI workflow nodes — Richard's real stack
         const nodeData = [
-          { name: 'Research', tool: 'Claude Code + Web Search', x: -3, color: 0xff6b4a }, // coral
-          { name: 'Copy',     tool: 'GPT + Custom Prompts',     x: -1, color: 0x6366f1 }, // violet
-          { name: 'Art',      tool: 'GPT Image 2 + Midjourney', x:  1, color: 0x00d4aa }, // mint
-          { name: 'Video',    tool: 'Seedance 2.0 + Runway',    x:  3, color: 0xf59e0b }, // amber
+          { name: 'Research', tool: 'Claude Code + Web Search', x: -2.5, y: 0.8, color: 0xff6b4a }, // coral
+          { name: 'Copy',     tool: 'GPT + Custom Prompts',     x: -0.83, y: 0.8, color: 0x6366f1 }, // violet
+          { name: 'Art',      tool: 'GPT Image 2 + Midjourney', x:  0.83, y: 0.8, color: 0x00d4aa }, // mint
+          { name: 'Video',    tool: 'Seedance 2.0 + Runway',    x:  2.5, y: 0.8, color: 0xf59e0b }, // amber
         ];
         const nodes = [];
         // Semantic 3D shapes per AI step — each geometry visually maps to its function:
@@ -1896,8 +1904,8 @@
 
         nodeData.forEach((d, i) => {
           const group = nodeBuilders[i](d.color);
-          group.position.set(d.x, 0, 0);
-          group.userData = { name: d.name, tool: d.tool, baseX: d.x, idx: i, color: d.color };
+          group.position.set(d.x, d.y || 0, 0);
+          group.userData = { name: d.name, tool: d.tool, baseX: d.x, baseY: d.y || 0, idx: i, color: d.color };
           aiScene.add(group);
           nodes.push(group);
         });
@@ -1975,11 +1983,11 @@
           updateStage();
 
           // Camera glides from first node to last based on progress
-          const camX = -3 + aiProgress * 6; // -3 → 3
+          const camX = -2.5 + aiProgress * 5; // -2.5 → 2.5
           aiCamera.position.x += (camX - aiCamera.position.x) * 0.05;
           // Slight vertical breath
-          aiCamera.position.y = Math.sin(performance.now() * 0.0005) * 0.15;
-          aiCamera.lookAt(camX + 1, 0, 0); // look toward the next node
+          aiCamera.position.y = 0.5 + Math.sin(performance.now() * 0.0005) * 0.12;
+          aiCamera.lookAt(camX + 0.83, 0.5, 0); // look toward the next node
 
           // Each node bobs slightly + rotates
           nodes.forEach((n, i) => {
