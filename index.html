@@ -145,7 +145,9 @@
     }
 
     /* PROGRESS BAR */
-    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--coral), var(--violet)); z-index: 100; width: 0%; box-shadow: 0 1px 8px rgba(255,107,74,0.45); transition: width .12s ease-out; }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--coral) 30%, var(--coral) 100%); z-index: 100; width: 0%; box-shadow: 0 0 6px rgba(255,107,74,0.3); transition: width .12s ease-out; }
+    .progress-pill { position: fixed; top: 18px; right: 18px; z-index: 99; font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; background: rgba(250, 248, 243, 0.7); backdrop-filter: blur(8px); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); transition: opacity .3s; opacity: 0; pointer-events: none; }
+    .progress-pill.show { opacity: 1; }
 
     /* NAV */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 0; background: rgba(250, 248, 243, .72); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--line); }
@@ -476,23 +478,23 @@
       border-radius: 50%;
       pointer-events: none;
     }
-    .hero-droplet-orbit-1 { width: 78%; height: 78%; animation: orbitSpin 50s linear infinite; }
-    .hero-droplet-orbit-2 { width: 88%; height: 88%; border-color: rgba(99, 102, 241, 0.15); animation: orbitSpin 80s linear infinite reverse; }
-    .hero-droplet-orbit-3 { width: 100%; height: 100%; border-color: rgba(0, 212, 170, 0.12); animation: orbitSpin 110s linear infinite; }
+    .hero-droplet-orbit-1 { width: 68%; height: 68%; animation: orbitSpin 60s linear infinite; }
+    .hero-droplet-orbit-2 { width: 84%; height: 84%; animation: orbitSpin 90s linear infinite reverse; }
+    .hero-droplet-orbit-3 { width: 100%; height: 100%; animation: orbitSpin 120s linear infinite; }
     .hero-droplet-sat {
       position: absolute;
       top: 50%; left: 50%;
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
+      background: var(--ink);
+      box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.08);
       transform-origin: 0 0;
       pointer-events: none;
+      animation: orbitSat1 18s linear infinite;
     }
-    .hero-droplet-sat-1 { background: #ff6b4a; box-shadow: 0 0 12px rgba(255, 107, 74, 0.6); animation: orbitSat1 8s linear infinite; }
-    .hero-droplet-sat-2 { background: #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.6); animation: orbitSat2 12s linear infinite; }
-    .hero-droplet-sat-3 { background: #00d4aa; box-shadow: 0 0 12px rgba(0, 212, 170, 0.6); animation: orbitSat3 16s linear infinite; }
     @keyframes dropletBreath {
       0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
-      50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
     }
     @keyframes dropletMorph {
       0%, 100% { border-radius: 50% 50% 50% 50%; }
@@ -500,9 +502,7 @@
       65% { border-radius: 48% 52% 51% 49%; }
     }
     @keyframes orbitSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-    @keyframes orbitSat1 { from { transform: rotate(0deg) translateX(45%); } to { transform: rotate(360deg) translateX(45%); } }
-    @keyframes orbitSat2 { from { transform: rotate(120deg) translateX(40%); } to { transform: rotate(480deg) translateX(40%); } }
-    @keyframes orbitSat3 { from { transform: rotate(240deg) translateX(48%); } to { transform: rotate(600deg) translateX(48%); } }
+    @keyframes orbitSat1 { from { transform: rotate(-30deg) translateX(50%); } to { transform: rotate(330deg) translateX(50%); } }
     .hero-platform-orbit {
       position: relative;
       width: 100%; height: 100%;
@@ -648,12 +648,17 @@
     @media (max-width: 768px) { .marquee-track { font-size: 11px; gap: 28px; } .marquee-track > span { gap: 28px; } }
 
     /* SECTION HEADS */
-    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 64px; flex-wrap: wrap; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 56px; flex-wrap: wrap; }
     .section-label { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--coral); margin-bottom: 16px; letter-spacing: 0.04em; }
     .section-label::before { content: ''; width: 28px; height: 1px; background: var(--coral); flex-shrink: 0; }
-    .section-title { font-family: var(--font-display); font-size: clamp(36px, 4.6vw, 60px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; max-width: 820px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(32px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; max-width: 640px; }
     .section-title .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); letter-spacing: -0.005em; }
-    .section-meta { max-width: 340px; font-size: 15px; color: var(--muted); line-height: 1.6; }
+    .section-meta { max-width: 360px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .section-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+    .section-head-counter { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.06em; text-transform: uppercase; }
+    .section-head-counter strong { font-family: var(--font-display); font-size: 56px; font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1; display: block; }
+    .section-head-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; transition: gap .25s, color .25s; }
+    .section-head-link:hover { gap: 12px; color: var(--coral); border-color: var(--coral); }
 
     /* ABOUT */
     .about { background: var(--bg); }
@@ -664,52 +669,50 @@
     .about-text .violet-bg { background: linear-gradient(180deg, transparent 60%, var(--violet-soft) 60%); padding: 0 4px; }
     .about-text .serif-inline { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
     .about-body { max-width: 920px; margin: 24px auto 0; }
-    /* Stat grid — playful number block, key numbers highlighted */
-    .stat-grid {
+    /* About inline stats — 4 horizontal numbers with labels */
+    .about-stats {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1px;
-      max-width: 700px;
-      margin: 40px auto 0;
-      background: var(--line);
-      border: 1px solid var(--line);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 920px;
+      margin: 48px auto 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    .stat-cell {
-      background: var(--bg);
-      aspect-ratio: 1.5 / 1;
-      display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
-      padding: 12px 14px;
+    @media (max-width: 720px) { .about-stats { grid-template-columns: repeat(2, 1fr); } }
+    .about-stat-item {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 28px 24px;
       position: relative;
       transition: background .25s;
     }
-    .stat-cell:hover { background: var(--bg-card); }
-    .stat-cell .n {
+    .about-stat-item + .about-stat-item { border-left: 1px solid var(--line); }
+    @media (max-width: 720px) { .about-stat-item + .about-stat-item { border-left: none; } .about-stat-item:nth-child(odd) { border-right: 1px solid var(--line); } }
+    .about-stat-item:hover { background: var(--bg-card); }
+    .about-stat-num {
       font-family: var(--font-display);
-      font-size: clamp(28px, 3.2vw, 44px);
+      font-size: clamp(36px, 4vw, 56px);
       font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      color: var(--muted);
-      transition: color .3s;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--ink);
     }
-    .stat-cell .l {
+    .about-stat-item:hover .about-stat-num { color: var(--coral); }
+    .about-stat-label {
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.3;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.5;
     }
-    .stat-cell.hl { background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg) 100%); }
-    .stat-cell.hl .n { color: var(--ink); }
-    .stat-cell.hl .l { color: var(--ink); font-weight: 600; }
-    .stat-cell.hl .n::before {
-      content: '';
-      position: absolute;
-      top: 12px; left: 14px;
-      width: 6px; height: 6px;
-      background: var(--coral);
-      border-radius: 50%;
+    .about-stat-label small {
+      display: block;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
+      margin-top: 4px;
+      font-weight: 500;
     }
 
     .about-stats-inline { display: flex; gap: 0; align-items: flex-start; padding-top: 12px; border-top: 1px solid var(--line); margin-top: 24px; }
@@ -732,25 +735,38 @@
 
     /* CASES */
     .cases { background: var(--bg-soft); }
-    .case-list { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .case-row { background: var(--bg); padding: 32px 0; display: grid; grid-template-columns: 60px 2fr 1.4fr 1fr 60px; gap: 32px; align-items: center; transition: background .3s, padding .3s; position: relative; cursor: pointer; }
-    .case-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--coral); transform: scaleY(0); transform-origin: center; transition: transform .4s cubic-bezier(.6,0,.2,1); }
-    .case-row:hover { background: var(--bg-card); padding-left: 24px; padding-right: 24px; }
-    .case-row:hover::before { transform: scaleY(1); }
-    .case-num { font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-weight: 600; }
-    .case-title { font-family: var(--font-display); font-size: clamp(24px, 3.2vw, 42px); line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; transition: transform .3s; }
-    .case-row:hover .case-title { transform: translateX(8px); }
-    .case-title .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
-    .case-meta { display: flex; flex-direction: column; gap: 4px; }
-    .case-tag { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); font-weight: 600; letter-spacing: 0.04em; }
-    .case-sub { font-size: 13px; color: var(--muted); }
-    .case-stats { display: flex; gap: 16px; flex-wrap: wrap; }
-    .case-stat { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
-    .case-stat strong { color: var(--coral); }
-    .case-arrow { justify-self: end; width: 48px; height: 48px; border: 1px solid var(--line-strong); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .4s cubic-bezier(.6,0,.2,1); flex-shrink: 0; }
-    .case-row:hover .case-arrow { background: var(--ink); border-color: var(--ink); color: var(--bg); transform: rotate(-45deg); }
-    .case-arrow svg { width: 18px; height: 18px; }
-    @media (max-width: 980px) { .case-row { grid-template-columns: 40px 1fr 50px; gap: 16px; } .case-meta, .case-stats { display: none; } }
+    .case-list { display: flex; flex-direction: column; gap: 0; background: transparent; border-top: 1px solid var(--line); }
+    .case-row {
+      background: transparent;
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 60px 2.4fr 1.2fr 1.4fr 56px;
+      gap: 32px;
+      align-items: center;
+      transition: background .3s, padding .3s;
+      position: relative;
+      cursor: pointer;
+      border-bottom: 1px solid var(--line);
+    }
+    .case-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--coral); transition: width .4s cubic-bezier(.6,0,.2,1); }
+    .case-row:hover { background: var(--bg-card); padding-left: 20px; padding-right: 20px; }
+    .case-row:hover::before { width: 3px; }
+    .case-row-num { font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; }
+    .case-row-main { min-width: 0; }
+    .case-row-title { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.15; font-weight: 800; letter-spacing: -0.025em; transition: transform .3s; }
+    .case-row:hover .case-row-title { transform: translateX(8px); }
+    .case-row-title .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
+    .case-row-sub { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); font-weight: 600; letter-spacing: 0.04em; margin-top: 6px; }
+    .case-row-info { display: flex; flex-direction: column; gap: 4px; }
+    .case-row-info strong { font-family: var(--font-mono); font-size: 12px; color: var(--ink); font-weight: 700; letter-spacing: 0.02em; }
+    .case-row-info small { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .case-row-stats { display: flex; flex-direction: column; gap: 8px; }
+    .case-row-stats .cs { display: flex; align-items: baseline; gap: 6px; }
+    .case-row-stats .cs strong { font-family: var(--font-display); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; color: var(--coral); line-height: 1; }
+    .case-row-stats .cs small { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .case-row-arrow { justify-self: end; width: 48px; height: 48px; border: 1px solid var(--line-strong); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .4s cubic-bezier(.6,0,.2,1); flex-shrink: 0; font-size: 18px; }
+    .case-row:hover .case-row-arrow { background: var(--ink); border-color: var(--ink); color: var(--bg); transform: rotate(-45deg); }
+    @media (max-width: 980px) { .case-row { grid-template-columns: 40px 1fr 50px; gap: 16px; padding: 24px 0; } .case-row-info, .case-row-stats { display: none; } .case-row:hover { padding-left: 12px; padding-right: 12px; } }
 
     /* AI — NO MORE BLACK BLOCK */
     .ai { background: var(--bg); }
@@ -806,6 +822,67 @@
     .ai-step .tools { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
     .ai-step .tool { font-family: var(--font-mono); font-size: 11px; padding: 4px 10px; background: var(--bg-soft); border-radius: 999px; color: var(--ink-soft); font-weight: 600; transition: background .2s, color .2s; }
     .ai-step:hover .tool { background: var(--coral); color: #fff; }
+    /* AI step foot — interactive example row */
+    .ai-step-foot {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line);
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+      transition: opacity .25s, color .25s;
+    }
+    .ai-step:hover .ai-step-foot { opacity: 1; color: var(--ink); }
+    .ai-step-pulse {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 0 rgba(255,107,74, 0.5);
+      animation: pulseDot 1.8s ease-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 rgba(255,107,74, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(255,107,74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,107,74, 0); }
+    }
+    .ai-step-example { flex: 1; min-width: 0; line-height: 1.4; }
+    .ai-step-arrow { font-size: 16px; color: var(--coral); transition: transform .35s cubic-bezier(.6,0,.2,1); }
+    .ai-step:hover .ai-step-arrow { transform: translateX(6px); }
+    /* AI step hover tooltip — show example output in floating panel */
+    .ai-step-tooltip {
+      position: absolute;
+      left: calc(100% + 16px);
+      top: 50%;
+      transform: translateY(-50%) translateX(-8px);
+      width: 280px;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.55;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 5;
+      box-shadow: 0 12px 30px -8px rgba(0,0,0,0.3);
+    }
+    .ai-step-tooltip::before {
+      content: '';
+      position: absolute;
+      left: -6px; top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 12px; height: 12px;
+      background: var(--ink);
+    }
+    .ai-step-tooltip.show { opacity: 1; transform: translateY(-50%) translateX(0); }
+    .ai-step { position: relative; }
+    .ai-step .ai-step-body { min-width: 0; }
 
     /* AI Summary — LIGHT (not black) */
     .ai-summary { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; }
@@ -1212,8 +1289,6 @@
       font-weight: 500;
       font-size: 10px;
     }
-    /* Hidden case-row old layout — keep DOM but no display */
-    .case-list { display: none; }
 
     /* FOOTER — Lusion-style with newsletter + addresses */
     .footer {
@@ -1315,6 +1390,7 @@
 <canvas id="trail-canvas" aria-hidden="true"></canvas>
 
 <div class="progress-bar" id="progressBar"></div>
+<div class="progress-pill" id="progressPill">scroll · 0%</div>
 <div class="cursor-arrow" id="cursorArrow" aria-hidden="true">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4 3 L20 12 L11.5 14 L9 22 Z"/>
@@ -1384,8 +1460,6 @@
         <div class="hero-droplet-orbit hero-droplet-orbit-2"></div>
         <div class="hero-droplet-orbit hero-droplet-orbit-3"></div>
         <div class="hero-droplet-sat hero-droplet-sat-1"></div>
-        <div class="hero-droplet-sat hero-droplet-sat-2"></div>
-        <div class="hero-droplet-sat hero-droplet-sat-3"></div>
       </div>
     </div>
   </div>
@@ -1467,27 +1541,23 @@
     </div>
   </div>
 
-  <div class="stat-grid" id="statGrid">
-    <div class="stat-cell"><span class="n">0</span></div>
-    <div class="stat-cell hl"><span class="n">1</span><span class="l">dual degree</span></div>
-    <div class="stat-cell"><span class="n">2</span></div>
-    <div class="stat-cell hl"><span class="n">3</span><span class="l">internships</span></div>
-    <div class="stat-cell"><span class="n">4</span></div>
-    <div class="stat-cell hl"><span class="n">5</span><span class="l">platforms mastered</span></div>
-    <div class="stat-cell"><span class="n">6</span></div>
-    <div class="stat-cell"><span class="n">7</span><span class="l">IELTS</span></div>
-    <div class="stat-cell"><span class="n">8</span></div>
-    <div class="stat-cell"><span class="n">9</span></div>
-    <div class="stat-cell hl"><span class="n">10</span><span class="l">creative cycles</span></div>
-    <div class="stat-cell"><span class="n">11</span></div>
-    <div class="stat-cell"><span class="n">12</span></div>
-    <div class="stat-cell"><span class="n">13</span></div>
-    <div class="stat-cell"><span class="n">14</span></div>
-    <div class="stat-cell hl"><span class="n">15</span><span class="l">brands shipped</span></div>
-    <div class="stat-cell"><span class="n">16</span></div>
-    <div class="stat-cell"><span class="n">17</span><span class="l">CELTA</span></div>
-    <div class="stat-cell"><span class="n">18</span></div>
-    <div class="stat-cell hl"><span class="n">19</span><span class="l">years old</span></div>
+  <div class="about-stats">
+    <div class="about-stat-item">
+      <span class="about-stat-num">3</span>
+      <span class="about-stat-label">Internships<br><small>game · social · academic</small></span>
+    </div>
+    <div class="about-stat-item">
+      <span class="about-stat-num">4</span>
+      <span class="about-stat-label">Overseas platforms<br><small>Reddit · Discord · X · YouTube</small></span>
+    </div>
+    <div class="about-stat-item">
+      <span class="about-stat-num">7.0</span>
+      <span class="about-stat-label">IELTS<br><small>CELTA certified</small></span>
+    </div>
+    <div class="about-stat-item">
+      <span class="about-stat-num">2,500+</span>
+      <span class="about-stat-label">Game hours<br><small>across 4 sub-genres</small></span>
+    </div>
   </div>
 </section>
 
@@ -1502,68 +1572,80 @@
         Recent <span class="serif">campaigns</span> and the stories behind them.
       </h2>
     </div>
-    <p class="section-meta">
-      Four case studies covering overseas marketing, esports content, creator ecosystem, and academic research visualization.
-    </p>
+    <div class="section-head-right">
+      <div class="section-head-counter">
+        <strong>04</strong>
+        case studies
+      </div>
+      <a href="https://github.com/RichardLiu369" class="section-head-link magnetic" target="_blank" rel="noopener">View all on GitHub →</a>
+    </div>
   </div>
 
   <div class="case-list">
-    <a class="case-row" href="#contact">
+    <a class="case-row magnetic" href="#contact">
       <div class="case-row-num">01 / 04</div>
       <div class="case-row-main">
         <div class="case-row-title">NetEase Leihuo <span class="serif">×</span> NARAKA Overseas</div>
         <div class="case-row-sub">Heroes Assemble · 5th anniversary</div>
       </div>
-      <div class="case-row-detail">
-        <span><strong>2024.08 — 2024.11</strong><small>Sentiment monitoring · Brand ops · Live event coordination</small></span>
-        <span><strong>Heroes Assemble · UG live coordination</strong><small>Heroes · Squad · ZG</small></span>
-        <span><strong>2 videos · 1028.8K</strong><small>live event coordination</small></span>
-        <span><strong>4 posts · 1.3M views</strong><small>UP campaigns</small></span>
+      <div class="case-row-info">
+        <strong>2024.08 — Now</strong>
+        <small>Reddit sentiment · Discord ops · 5th anniv campaign</small>
+      </div>
+      <div class="case-row-stats">
+        <div class="cs"><strong>1,028K</strong><small>video views</small></div>
+        <div class="cs"><strong>1.3M</strong><small>post reach</small></div>
       </div>
       <div class="case-row-arrow">→</div>
     </a>
 
-    <a class="case-row" href="naraka-case.html">
+    <a class="case-row magnetic" href="naraka-case.html">
       <div class="case-row-num">02 / 04</div>
       <div class="case-row-main">
         <div class="case-row-title">Saint Seiya <span class="serif">×</span> Discord</div>
-        <div class="case-row-sub">Saint Seiya · Awakening · UG community</div>
+        <div class="case-row-sub">Saint Seiya: Awakening · EN community build</div>
       </div>
-      <div class="case-row-detail">
-        <span><strong>2024.06 — 2024.09</strong><small>Discord ecosystem · live event coordination</small></span>
-        <span><strong>Content ecosystem · 202M mints</strong><small>Saint Seiya · Awakening · live event</small></span>
-        <span><strong>Discord ops · 1.2K MAU</strong><small>live event coordination</small></span>
-        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      <div class="case-row-info">
+        <strong>2026.05 — Now</strong>
+        <small>Discord ecosystem · 5th anniv coordination</small>
+      </div>
+      <div class="case-row-stats">
+        <div class="cs"><strong>1.2K</strong><small>DAU</small></div>
+        <div class="cs"><strong>18</strong><small>events shipped</small></div>
       </div>
       <div class="case-row-arrow">→</div>
     </a>
 
-    <a class="case-row" href="https://richardliu369.github.io/portfolio/portfolio.html" target="_blank" rel="noopener">
+    <a class="case-row magnetic" href="https://richardliu369.github.io/portfolio/portfolio.html" target="_blank" rel="noopener">
       <div class="case-row-num">03 / 04</div>
       <div class="case-row-main">
         <div class="case-row-title">Hero Esports <span class="serif">×</span> PGS</div>
-        <div class="case-row-sub">Tournament highlights · 53H live coordination</div>
+        <div class="case-row-sub">PGS tournament · 53H live coordination</div>
       </div>
-      <div class="case-row-detail">
-        <span><strong>2025.03 — 2025.06</strong><small>YouTube Shorts · 2350 views · Live event coordination</small></span>
-        <span><strong>Tournament highlights · 53H live coordination</strong><small>Discord ecosystem · live event coordination</small></span>
-        <span><strong>26 posts · 335K views</strong><small>UP campaigns</small></span>
-        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      <div class="case-row-info">
+        <strong>2025.03 — 2025.06</strong>
+        <small>YouTube Shorts · tournament highlights</small>
+      </div>
+      <div class="case-row-stats">
+        <div class="cs"><strong>335K</strong><small>post reach</small></div>
+        <div class="cs"><strong>26</strong><small>posts shipped</small></div>
       </div>
       <div class="case-row-arrow">→</div>
     </a>
 
-    <a class="case-row" href="https://richardliu369.github.io/HHNL-Visualization/" target="_blank" rel="noopener">
+    <a class="case-row magnetic" href="https://richardliu369.github.io/HHNL-Visualization/" target="_blank" rel="noopener">
       <div class="case-row-num">04 / 04</div>
       <div class="case-row-main">
         <div class="case-row-title">Hip-hop <span class="serif">×</span> NLP Research</div>
-        <div class="case-row-sub">Two flows · 5-thread Reddit long-form</div>
+        <div class="case-row-sub">Digital platform cultural transmission thesis</div>
       </div>
-      <div class="case-row-detail">
-        <span><strong>2026.02 — 2026.04</strong><small>Hip-hop · 2024 scraping · interactive narrative</small></span>
-        <span><strong>React · D3 scripts · scraping pipeline</strong><small>Two flows · live event coordination</small></span>
-        <span><strong>26 posts · 335K views</strong><small>UP campaigns</small></span>
-        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      <div class="case-row-info">
+        <strong>2026.02 — 2026.04</strong>
+        <small>Reddit scraping · D3 viz · 5-thread long-form</small>
+      </div>
+      <div class="case-row-stats">
+        <div class="cs"><strong>5</strong><small>threads</small></div>
+        <div class="cs"><strong>10K+</strong><small>data pts</small></div>
       </div>
       <div class="case-row-arrow">→</div>
     </a>
@@ -1591,9 +1673,9 @@
 
   <div class="ai-lab-grid">
     <div class="ai-lab-list">
-      <div class="ai-step">
+      <div class="ai-step magnetic" data-example="Scraped 312 Reddit threads, 47 X posts, 18 Steam reviews. Tagged into 6 IP clusters + 9 sentiment topics. Time: 4h.">
         <span class="step-num">// 01</span>
-        <div>
+        <div class="ai-step-body">
           <h3>IP &amp; Competitor <span class="serif">Intel</span></h3>
           <p>Claude Code agents scrape Reddit, X, Steam, and YouTube official channels for IP lore, sentiment, and competitor moves.</p>
           <div class="tools">
@@ -1601,11 +1683,16 @@
             <span class="tool">Codex</span>
             <span class="tool">Web Search</span>
           </div>
+          <div class="ai-step-foot">
+            <span class="ai-step-pulse"></span>
+            <span class="ai-step-example">Hover to see example output</span>
+            <span class="ai-step-arrow">→</span>
+          </div>
         </div>
       </div>
-      <div class="ai-step">
+      <div class="ai-step magnetic" data-example="Generated 4 EN / 3 CN X threads (1.2K impressions), 2 Reddit long-forms (380 upvotes), 6 Discord announcements. Time: 90min.">
         <span class="step-num">// 02</span>
-        <div>
+        <div class="ai-step-body">
           <h3>Bilingual <span class="serif">Copy</span></h3>
           <p>Generate EN / CN copy variants per platform — X thread, Reddit long-form, Discord announcement. Each on its own tone.</p>
           <div class="tools">
@@ -1613,11 +1700,16 @@
             <span class="tool">GPT-4</span>
             <span class="tool">Custom Prompts</span>
           </div>
+          <div class="ai-step-foot">
+            <span class="ai-step-pulse"></span>
+            <span class="ai-step-example">Hover to see example output</span>
+            <span class="ai-step-arrow">→</span>
+          </div>
         </div>
       </div>
-      <div class="ai-step">
+      <div class="ai-step magnetic" data-example="Generated 12 key art variants × 4 styles for NARAKA 5th anniv. Selected 3 for A/B test. Cost: ¥0 vs. ¥12K traditional. Time: 35min.">
         <span class="step-num">// 03</span>
-        <div>
+        <div class="ai-step-body">
           <h3>Key Art &amp; <span class="serif">Poster</span></h3>
           <p>Generate and iterate in minutes instead of days — better cost, faster turnaround on A/B tests.</p>
           <div class="tools">
@@ -1625,17 +1717,27 @@
             <span class="tool">NanoBanana Pro</span>
             <span class="tool">Midjourney</span>
           </div>
+          <div class="ai-step-foot">
+            <span class="ai-step-pulse"></span>
+            <span class="ai-step-example">Hover to see example output</span>
+            <span class="ai-step-arrow">→</span>
+          </div>
         </div>
       </div>
-      <div class="ai-step">
+      <div class="ai-step magnetic" data-example="Generated 3 motion demos × 15s for NARAKA hero reveal + 1 30s pitch deck intro. Time: 2h vs. 3 days agency.">
         <span class="step-num">// 04</span>
-        <div>
+        <div class="ai-step-body">
           <h3>Short Video <span class="serif">Demo</span></h3>
           <p>15-30 second motion demo, internal alignment, pitch decks, and creator briefs.</p>
           <div class="tools">
             <span class="tool">Seedance 2.0</span>
             <span class="tool">Runway</span>
             <span class="tool">Kling</span>
+          </div>
+          <div class="ai-step-foot">
+            <span class="ai-step-pulse"></span>
+            <span class="ai-step-example">Hover to see example output</span>
+            <span class="ai-step-arrow">→</span>
           </div>
         </div>
       </div>
@@ -2024,6 +2126,18 @@
       el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering-strong'));
     });
 
+    // AI step hover tooltip — show example output panel
+    document.querySelectorAll('.ai-step').forEach(step => {
+      const example = step.dataset.example;
+      if (!example) return;
+      const tip = document.createElement('div');
+      tip.className = 'ai-step-tooltip';
+      tip.innerHTML = '<div style="opacity:.5; font-size:10px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.08em;">// last run</div>' + example;
+      step.appendChild(tip);
+      step.addEventListener('mouseenter', () => { tip.classList.add('show'); });
+      step.addEventListener('mouseleave', () => { tip.classList.remove('show'); });
+    });
+
     // Magnetic pull for elements with .magnetic class
     const magneticEls = document.querySelectorAll('.magnetic, .nav-cta, .nav-links a, .btn-primary, .btn-ghost, .contact-link, .contact-resume');
     magneticEls.forEach(el => {
@@ -2049,7 +2163,15 @@
   }
 
   // ============== PROGRESS BAR ==============
-  ScrollTrigger.create({ start: 'top top', end: 'bottom bottom', onUpdate: (self) => { document.getElementById('progressBar').style.width = (self.progress * 100) + '%'; } });
+  ScrollTrigger.create({ start: 'top top', end: 'bottom bottom', onUpdate: (self) => {
+    const p = Math.round(self.progress * 100);
+    document.getElementById('progressBar').style.width = p + '%';
+    const pill = document.getElementById('progressPill');
+    if (pill) {
+      pill.textContent = 'scroll · ' + p + '%';
+      pill.classList.toggle('show', p > 2);
+    }
+  } });
 
   // ============== HERO ENTRANCE ==============
   if (!prefersReduced) {
