@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Richard Liu · Game Marketing × AI-Native Creator</title>
-  <meta name="description" content="Richard Liu · 游戏海外营销 × AI-native content workflow。22 岁,澳大硕士 + 上海海洋本科,三段游戏 / 社媒 / 学术实习,跑 AI-native 内容管线。" />
+  <meta name="description" content="Richard Liu — 22, Master's in English Studies at University of Macau. 4 overseas platforms (Reddit / Discord / YouTube / X), 3 internships, AI-native workflow." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -85,12 +85,6 @@
 
     /* 3D / WEBGL */
     #three-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .55; }
-    #ai-pipeline-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
     #trail-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; }
 
     /* CURSOR — system cursor is hidden globally; the custom arrow + ring fuse into one "super cursor" */
@@ -151,7 +145,7 @@
     }
 
     /* PROGRESS BAR */
-    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--coral); z-index: 100; width: 0%; }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--coral), var(--violet)); z-index: 100; width: 0%; box-shadow: 0 1px 8px rgba(255,107,74,0.45); transition: width .12s ease-out; }
 
     /* NAV */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 0; background: rgba(250, 248, 243, .72); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--line); }
@@ -162,6 +156,20 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: .5; transform: scale(1.4); }
     }
+    /* Floating breathing — adds a sense of life to large titles */
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    @keyframes floatYLarge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .floating-text { animation: floatY 5.5s ease-in-out infinite; will-change: transform; }
+    .floating-text-lg { animation: floatYLarge 6.5s ease-in-out infinite; will-change: transform; }
+    @media (prefers-reduced-motion: reduce) {
+      .floating-text, .floating-text-lg { animation: none !important; }
+    }
     .nav-links { display: flex; gap: 4px; align-items: center; }
     .nav-links a { padding: 8px 16px; border-radius: 999px; font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink-soft); transition: background .2s, color .2s; }
     .nav-links a:hover { background: var(--bg-soft); color: var(--ink); }
@@ -170,24 +178,159 @@
     @media (max-width: 768px) { .nav-links { display: none; } .nav-inner { padding: 0 20px; } }
 
     /* HERO */
-    .hero { min-height: 100vh; padding: 140px 0 80px; display: flex; align-items: center; position: relative; }
-    .hero-inner { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; width: 100%; }
+    .hero {
+      min-height: 100vh;
+      padding: 110px 0 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      position: relative;
+      gap: 20px;
+    }
+    .hero-tag-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      padding-left: 32px;
+    }
+    .hero-tag-line .hero-tag-dot { color: var(--coral); font-size: 14px; animation: pulse 2s ease-in-out infinite; }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      width: 100%;
+    }
+    @media (max-width: 980px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .hero-content { padding-left: 32px; max-width: 720px; }
+    .hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 80px) !important;
+      line-height: 1.08;
+      letter-spacing: -0.022em;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    .hero-content h1 .word { display: inline-block; overflow: hidden; padding-bottom: .04em; margin-right: 0.18em; }
+    .hero-content h1 .char { display: inline-block; will-change: transform; }
+    .hero-content h1 .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); letter-spacing: -0.01em; }
+    .hero-content h1 .violet { color: var(--violet); }
+    .hero-sessions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .hero-sessions-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--coral);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+    .hero-sessions-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hero-sessions-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink);
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      padding: 5px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      transition: background .2s, border-color .2s;
+    }
+    .hero-sessions-pill:hover { background: var(--coral); border-color: var(--coral); color: #fff; }
+    .hero-sections {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      max-width: 1240px;
+      margin: 32px auto 0;
+      background: var(--line);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    @media (max-width: 980px) { .hero-sections { grid-template-columns: repeat(2, 1fr); } }
+    .hero-section-card {
+      display: grid;
+      grid-template-columns: 50px 1fr 24px;
+      gap: 16px;
+      align-items: start;
+      padding: 18px 22px;
+      background: var(--bg);
+      text-decoration: none;
+      color: inherit;
+      transition: background .25s, padding .25s;
+      position: relative;
+    }
+    .hero-section-card:hover { background: var(--coral); color: #fff; padding-left: 28px; }
+    .hero-section-card:hover .hero-section-num { color: rgba(255,255,255,.7); }
+    .hero-section-card:hover .hero-section-arrow { transform: translateX(4px); }
+    .hero-section-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--coral);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      padding-top: 4px;
+      transition: color .25s;
+    }
+    .hero-section-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hero-section-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+    .hero-section-card:hover .hero-section-sub { color: rgba(255,255,255,.8); }
+    .hero-section-arrow {
+      font-size: 18px;
+      color: var(--coral);
+      align-self: center;
+      transition: transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .hero-section-card:hover .hero-section-arrow { color: #fff; }
+      position: relative;
+      gap: 0;
+    }
+    .hero-title-center {
+      text-align: center;
+      max-width: 1000px;
+      margin: 60px auto 0;
+      font-size: clamp(40px, 5vw, 80px) !important;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      font-weight: 800;
+    }
+    .hero-title-center .word { display: inline-block; overflow: hidden; padding-bottom: .04em; margin-right: 0.18em; }
+    .hero-title-center .char { display: inline-block; will-change: transform; }
+    .hero-title-center .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); letter-spacing: -0.01em; }
+    .hero-title-center .violet { color: var(--violet); }
     @media (max-width: 980px) { .hero-inner { grid-template-columns: 1fr; gap: 60px; } }
 
     .hero-tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 999px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 28px; }
     .hero-tag-dot { width: 22px; height: 22px; background: var(--coral); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; flex-shrink: 0; }
 
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(44px, 5.5vw, 88px);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      font-weight: 800;
-      margin-bottom: 40px;
-      position: relative;
-      max-width: 100%;
-    }
-    .hero h1 .word { display: inline-block; overflow: hidden; padding-bottom: .05em; margin-right: 0.24em; }
+    /* h1 is now styled via .hero-title-center */
+    .hero h1 .word { display: inline-block; overflow: hidden; padding-bottom: .04em; margin-right: 0.22em; }
     .hero h1 .char { display: inline-block; will-change: transform; }
     .hero h1 .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); letter-spacing: -0.01em; }
     .hero h1 .violet { color: var(--violet); }
@@ -254,11 +397,20 @@
     }
     .scroll-prompt .plus-row span { font-weight: 400; }
 
-    .hero-desc { max-width: 540px; font-size: 18px; line-height: 1.6; color: var(--muted); margin-bottom: 36px; }
+    .hero-desc {
+      max-width: 560px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-top: 40px;
+      margin-bottom: 40px;
+      padding-left: 20px;
+      border-left: 2px solid var(--coral);
+    }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
     .hero-desc .serif-inline { font-family: var(--font-serif); font-style: italic; color: var(--coral); font-size: 1.1em; }
 
-    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
     .btn-primary { padding: 14px 24px; background: var(--ink); color: var(--bg); border-radius: 999px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: background .25s, transform .25s; position: relative; overflow: hidden; white-space: nowrap; letter-spacing: 0.01em; }
     .btn-primary:hover { background: var(--coral); transform: translateY(-2px); }
     .btn-primary .arrow { transition: transform .25s; }
@@ -266,9 +418,91 @@
     .btn-ghost { padding: 14px 24px; background: var(--bg-card); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 999px; font-weight: 600; font-size: 14px; transition: background .25s, border-color .25s; white-space: nowrap; letter-spacing: 0.01em; }
     .btn-ghost:hover { background: var(--bg-soft); border-color: var(--ink); }
 
-    /* HERO PLATFORM ORBIT — semantic visualization of Richard's actual platform stack */
-    .hero-visual { position: relative; aspect-ratio: 1; max-width: 440px; width: 100%; margin-left: auto; display: flex; align-items: center; justify-content: center; }
-    @media (max-width: 980px) { .hero-visual { max-width: 380px; margin: 0 auto; } }
+    /* HERO DROPLET — big coral liquid sphere, the visual anchor of the page */
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1;
+      max-width: 540px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+    }
+    @media (max-width: 980px) { .hero-visual { max-width: 420px; } }
+    .hero-droplet {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-droplet-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75%; height: 75%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 107, 74, 0.32) 0%, rgba(255, 107, 74, 0.08) 45%, transparent 75%);
+      filter: blur(20px);
+      animation: dropletBreath 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-droplet-core {
+      position: relative;
+      width: 56%; height: 56%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #ffb69b 0%, #ff8a6b 22%, #ff6b4a 50%, #e64a2e 100%);
+      box-shadow:
+        inset -16px -22px 40px rgba(150, 30, 10, 0.35),
+        inset 12px 18px 30px rgba(255, 200, 180, 0.55),
+        0 30px 80px -20px rgba(255, 107, 74, 0.55);
+      animation: dropletMorph 8s ease-in-out infinite;
+      z-index: 2;
+    }
+    .hero-droplet-spec {
+      position: absolute;
+      top: 32%; left: 33%;
+      width: 18%; height: 18%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 240, 230, 0.85) 0%, rgba(255, 240, 230, 0) 70%);
+      filter: blur(2px);
+      z-index: 3;
+      pointer-events: none;
+    }
+    .hero-droplet-orbit {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px dashed rgba(255, 107, 74, 0.18);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-droplet-orbit-1 { width: 78%; height: 78%; animation: orbitSpin 50s linear infinite; }
+    .hero-droplet-orbit-2 { width: 88%; height: 88%; border-color: rgba(99, 102, 241, 0.15); animation: orbitSpin 80s linear infinite reverse; }
+    .hero-droplet-orbit-3 { width: 100%; height: 100%; border-color: rgba(0, 212, 170, 0.12); animation: orbitSpin 110s linear infinite; }
+    .hero-droplet-sat {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+    .hero-droplet-sat-1 { background: #ff6b4a; box-shadow: 0 0 12px rgba(255, 107, 74, 0.6); animation: orbitSat1 8s linear infinite; }
+    .hero-droplet-sat-2 { background: #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.6); animation: orbitSat2 12s linear infinite; }
+    .hero-droplet-sat-3 { background: #00d4aa; box-shadow: 0 0 12px rgba(0, 212, 170, 0.6); animation: orbitSat3 16s linear infinite; }
+    @keyframes dropletBreath {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+      50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+    }
+    @keyframes dropletMorph {
+      0%, 100% { border-radius: 50% 50% 50% 50%; }
+      35% { border-radius: 52% 48% 50% 50%; }
+      65% { border-radius: 48% 52% 51% 49%; }
+    }
+    @keyframes orbitSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes orbitSat1 { from { transform: rotate(0deg) translateX(45%); } to { transform: rotate(360deg) translateX(45%); } }
+    @keyframes orbitSat2 { from { transform: rotate(120deg) translateX(40%); } to { transform: rotate(480deg) translateX(40%); } }
+    @keyframes orbitSat3 { from { transform: rotate(240deg) translateX(48%); } to { transform: rotate(600deg) translateX(48%); } }
     .hero-platform-orbit {
       position: relative;
       width: 100%; height: 100%;
@@ -279,98 +513,139 @@
       inset: 0;
       width: 100%; height: 100%;
     }
-    /* Center hub — represents the identity (Game × AI) Richard builds around */
+    /* Center monogram — the author (R for Richard), coral gradient harmonizes with platform pills */
     .orbit-hub {
       position: absolute;
       top: 50%; left: 50%;
-      width: 96px; height: 96px;
+      width: 110px; height: 110px;
       transform: translate(-50%, -50%);
       z-index: 2;
     }
     .orbit-hub-inner {
       position: absolute;
       inset: 0;
-      background: var(--coral);
+      background: linear-gradient(135deg, var(--coral) 0%, #ff8a6b 50%, #ff6b4a 100%);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: var(--bg);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 56px;
+      font-weight: 400;
+      color: #fff;
       text-align: center;
-      line-height: 1.1;
+      line-height: 1;
       padding: 8px;
-      box-shadow: 0 12px 32px -6px rgba(255, 107, 74, .5);
+      box-shadow: 0 18px 40px -8px rgba(255, 107, 74, 0.45);
+      letter-spacing: -0.02em;
+      transition: transform .6s cubic-bezier(.16,1,.3,1);
     }
+    .hero-platform-orbit:hover .orbit-hub-inner { transform: rotate(-12deg) scale(1.05); }
     .orbit-hub-ring {
       position: absolute;
-      inset: -8px;
-      border: 1.5px solid var(--coral);
+      inset: -10px;
+      border: 1.5px dashed rgba(255, 107, 74, 0.35);
       border-radius: 50%;
-      animation: hubPulse 3s ease-in-out infinite;
+      animation: hubSpin 60s linear infinite;
     }
-    @keyframes hubPulse {
-      0%, 100% { transform: scale(1); opacity: .6; }
-      50% { transform: scale(1.12); opacity: .15; }
+    .orbit-hub-ring-2 {
+      inset: -22px;
+      border: 1px dashed rgba(255, 107, 74, 0.18);
+      animation: hubSpin 90s linear infinite reverse;
     }
-    /* 4 orbiting platforms — Richard's actual platform stack */
+    @keyframes hubSpin { to { transform: rotate(360deg); } }
+    /* 4 orbiting platforms — each pill is COLORED (matches the brand palette) */
     .orbit-platform {
       position: absolute;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(150px) rotate(calc(-1 * var(--angle)));
-      display: flex; align-items: center; gap: 8px;
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(min(280px, 38vw)) rotate(calc(-1 * var(--angle)));
+      display: flex; align-items: center; gap: 10px;
       z-index: 3;
-      transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+      transition: transform 0.45s cubic-bezier(.16,1,.3,1);
+      cursor: pointer;
     }
-    .orbit-platform:hover { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(165px) rotate(calc(-1 * var(--angle))); }
+    .orbit-platform:hover {
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(min(320px, 44vw)) rotate(calc(-1 * var(--angle))) scale(1.08);
+    }
     .orbit-platform-dot {
-      width: 14px; height: 14px;
-      background: var(--ink);
+      width: 16px; height: 16px;
+      background: var(--platform-color, var(--ink));
       border-radius: 50%;
-      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5.5px var(--line);
       position: relative;
       flex-shrink: 0;
+      box-shadow: 0 0 0 5px var(--bg), 0 0 0 6.5px color-mix(in srgb, var(--platform-color, var(--ink)) 30%, transparent);
+      transition: transform .3s;
     }
+    .orbit-platform:hover .orbit-platform-dot { transform: scale(1.2); }
     .orbit-platform-dot::after {
       content: '';
       position: absolute;
       inset: -3px;
       border-radius: 50%;
-      background: var(--ink);
-      opacity: 0.15;
+      background: var(--platform-color, var(--ink));
+      opacity: 0.4;
       animation: dotPulse 2.4s ease-in-out infinite;
     }
     @keyframes dotPulse {
-      0%, 100% { transform: scale(1); opacity: .15; }
-      50% { transform: scale(2.4); opacity: 0; }
+      0%, 100% { transform: scale(1); opacity: .4; }
+      50% { transform: scale(2.6); opacity: 0; }
     }
     .orbit-platform-label {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--ink);
+      color: #fff;
       letter-spacing: 0.04em;
-      background: var(--bg-card);
-      padding: 5px 11px;
+      background: var(--platform-color, var(--ink));
+      padding: 7px 14px;
       border-radius: 999px;
-      border: 1px solid var(--line);
       white-space: nowrap;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 4px 16px -2px color-mix(in srgb, var(--platform-color, var(--ink)) 50%, transparent);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .orbit-platform:hover .orbit-platform-label {
+      box-shadow: 0 8px 28px -4px color-mix(in srgb, var(--platform-color, var(--ink)) 60%, transparent);
     }
 
-    .hero-stats { position: absolute; bottom: -10px; right: -10px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 18px; box-shadow: var(--shadow-soft); font-family: var(--font-mono); font-size: 12px; color: var(--muted); z-index: 3; transition: transform .3s; }
-    .hero-stats:hover { transform: translateY(-4px) rotate(-2deg); }
-    .hero-stats strong { color: var(--ink); font-size: 20px; display: block; line-height: 1; font-family: var(--font-display); }
-
     /* MARQUEE */
-    .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg); padding: 28px 0; position: relative; z-index: 2; }
-    .marquee-track { display: flex; gap: 60px; white-space: nowrap; animation: marquee 32s linear infinite; font-family: var(--font-display); font-weight: 700; font-size: 36px; letter-spacing: -0.03em; color: var(--ink); width: max-content; }
-    .marquee-track > span { display: inline-flex; align-items: center; gap: 60px; }
-    .marquee-track .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
-    .marquee-track .dot { width: 14px; height: 14px; background: var(--coral); border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+      padding: 32px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 48px;
+      white-space: nowrap;
+      animation: marquee 38s linear infinite;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      width: max-content;
+      text-transform: uppercase;
+      align-items: center;
+    }
+    .marquee-track.rev { animation-direction: reverse; animation-duration: 44s; margin-top: 18px; opacity: 0.6; font-size: 12px; }
+    .marquee-track > span { display: inline-flex; align-items: center; gap: 48px; }
+    .marquee-track .tag {
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    .marquee-track .tag.coral { color: var(--coral); border-color: var(--coral); }
+    .marquee-track .tag.violet { color: var(--violet); border-color: var(--violet); }
+    .marquee-track .tag.mint { color: var(--mint); border-color: var(--mint); }
+    .marquee-track .tag.amber { color: #b87514; border-color: #b87514; }
+    .marquee-track .dot { width: 6px; height: 6px; background: var(--coral); border-radius: 50%; display: inline-block; flex-shrink: 0; }
     @keyframes marquee { to { transform: translateX(-50%); } }
-    @media (max-width: 768px) { .marquee-track { font-size: 22px; gap: 32px; } .marquee-track > span { gap: 32px; } }
+    @media (max-width: 768px) { .marquee-track { font-size: 11px; gap: 28px; } .marquee-track > span { gap: 28px; } }
 
     /* SECTION HEADS */
     .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 64px; flex-wrap: wrap; }
@@ -382,21 +657,77 @@
 
     /* ABOUT */
     .about { background: var(--bg); }
-    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: start; }
-    @media (max-width: 980px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+    .about-grid { display: block; max-width: 920px; }
     .about-text { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 30px); line-height: 1.6; font-weight: 600; letter-spacing: 0; }
     .about-text .line { display: block; overflow: hidden; margin-bottom: 0.4em; }
     .about-text .highlight { background: linear-gradient(180deg, transparent 60%, var(--coral-soft) 60%); padding: 0 4px; }
     .about-text .violet-bg { background: linear-gradient(180deg, transparent 60%, var(--violet-soft) 60%); padding: 0 4px; }
     .about-text .serif-inline { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
+    .about-body { max-width: 920px; margin: 24px auto 0; }
+    /* Stat grid — playful number block, key numbers highlighted */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      max-width: 700px;
+      margin: 40px auto 0;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .stat-cell {
+      background: var(--bg);
+      aspect-ratio: 1.5 / 1;
+      display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+      padding: 12px 14px;
+      position: relative;
+      transition: background .25s;
+    }
+    .stat-cell:hover { background: var(--bg-card); }
+    .stat-cell .n {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--muted);
+      transition: color .3s;
+    }
+    .stat-cell .l {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.3;
+      letter-spacing: 0.04em;
+    }
+    .stat-cell.hl { background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg) 100%); }
+    .stat-cell.hl .n { color: var(--ink); }
+    .stat-cell.hl .l { color: var(--ink); font-weight: 600; }
+    .stat-cell.hl .n::before {
+      content: '';
+      position: absolute;
+      top: 12px; left: 14px;
+      width: 6px; height: 6px;
+      background: var(--coral);
+      border-radius: 50%;
+    }
 
+    .about-stats-inline { display: flex; gap: 0; align-items: flex-start; padding-top: 12px; border-top: 1px solid var(--line); margin-top: 24px; }
+    .stat-row { display: flex; align-items: flex-end; gap: 8px; flex: 1; min-width: 0; }
+    .stat-row + .stat-row { padding-left: 24px; margin-left: 8px; border-left: 1px solid var(--line); }
+    .stat-num { font-family: var(--font-display); font-size: clamp(32px, 3.2vw, 48px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.9; transition: color .3s; }
+    .stat-num.coral { color: var(--coral); }
+    .stat-num.violet { color: var(--violet); }
+    .stat-num.mint { color: var(--mint); }
+    .stat-cap { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.4; padding-bottom: 4px; }
+    .stat-cap span { display: block; color: var(--ink); font-weight: 700; text-transform: none; font-family: var(--font-display); font-size: 12px; letter-spacing: -0.01em; margin-top: 2px; }
+    .stat-row:hover .stat-num { color: var(--ink); }
+
+    /* (Legacy) 2x2 stat grid kept in CSS for back-compat if used elsewhere */
     .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
     .about-stat { background: var(--bg-card); padding: 28px 24px; transition: background .3s; }
     .about-stat:hover { background: var(--bg-soft); }
     .about-stat .num { font-family: var(--font-display); font-size: 42px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px; }
-    .about-stat .num.coral { color: var(--coral); }
-    .about-stat .num.violet { color: var(--violet); }
-    .about-stat .num.mint { color: var(--mint); }
     .about-stat .label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; }
 
     /* CASES */
@@ -426,11 +757,49 @@
     .ai-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: stretch; }
     @media (max-width: 980px) { .ai-grid { grid-template-columns: 1fr; } }
     .ai-flow { display: flex; flex-direction: column; gap: 12px; }
-    .ai-step { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); transition: transform .4s cubic-bezier(.6,0,.2,1), border-color .3s, box-shadow .3s; position: relative; overflow: hidden; }
+    .ai-flow-new { display: flex; flex-direction: column; gap: 12px; }
+    .ai-pipeline-banner {
+      padding: 28px 28px 26px;
+      background: linear-gradient(135deg, var(--ink) 0%, #1a1a1a 100%);
+      border-radius: var(--radius);
+      color: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-pipeline-banner::after {
+      content: '';
+      position: absolute;
+      top: -30%; right: -10%;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, var(--coral) 0%, transparent 60%);
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .ai-pipeline-banner-num { font-family: var(--font-mono); font-size: 11px; color: var(--coral); letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+    .ai-pipeline-banner-title { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px; max-width: 560px; }
+    .ai-pipeline-banner-meta { font-size: 14px; color: rgba(250, 248, 243, 0.7); letter-spacing: 0.01em; max-width: 480px; }
+
+    .ai-step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      padding: 26px 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform .5s cubic-bezier(.16,1,.3,1), border-color .3s, box-shadow .3s, background .3s;
+      position: relative;
+      overflow: hidden;
+      will-change: transform;
+    }
     .ai-step::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--coral); transition: width .4s cubic-bezier(.6,0,.2,1); }
-    .ai-step:hover { transform: translateY(-4px) translateX(4px); border-color: var(--coral); box-shadow: var(--shadow-hover); }
+    .ai-step:hover {
+      transform: translateY(-4px);
+      border-color: var(--coral);
+      box-shadow: 0 12px 40px -12px rgba(255, 107, 74, 0.3);
+    }
     .ai-step:hover::before { width: 3px; }
-    .ai-step .step-num { font-family: var(--font-mono); font-size: 13px; color: var(--coral); font-weight: 700; }
+    .ai-step .step-num { font-family: var(--font-mono); font-size: 14px; color: var(--coral); font-weight: 700; letter-spacing: 0.04em; }
     .ai-step h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; line-height: 1.3; }
     .ai-step h3 .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
     .ai-step p { font-size: 14px; color: var(--muted); line-height: 1.7; letter-spacing: 0.01em; }
@@ -450,22 +819,100 @@
     .ai-summary .metric .n { font-family: var(--font-display); font-size: 32px; font-weight: 800; letter-spacing: -0.04em; color: var(--coral); }
     .ai-summary .metric .l { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
 
-    /* GAMES — LIGHT (not black) */
-    .games { background: var(--bg-soft); color: var(--ink); }
+    /* GAMES — 6 simple cards, hover red */
+    .games { color: var(--ink); }
     .games .section-label { color: var(--coral); }
     .games .section-label::before { background: var(--coral); }
-    .games-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-    @media (max-width: 980px) { .games-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 480px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
-    .game-cell { aspect-ratio: 1; background: linear-gradient(160deg, var(--bg-card) 0%, var(--bg-soft) 100%); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: background .3s, transform .3s, border-color .3s, color .3s; cursor: pointer; position: relative; overflow: hidden; }
-    .game-cell::before { content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: var(--coral); opacity: .06; border-radius: 50%; transform: translate(30%, -30%); transition: opacity .3s, transform .3s; }
-    .game-cell:hover::before { opacity: 0; }
-    .game-cell:hover { background: var(--coral); border-color: var(--coral); color: #fff; transform: translateY(-6px); }
-    .game-cell .g-tag { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; transition: color .3s; }
-    .game-cell:hover .g-tag { color: rgba(255, 255, 255, .8); }
-    .game-cell .g-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
-    .game-cell .g-meta { font-family: var(--font-mono); font-size: 10px; color: var(--subtle); transition: color .3s; }
-    .game-cell:hover .g-meta { color: rgba(255, 255, 255, .7); }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+    @media (max-width: 880px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .games-grid { grid-template-columns: 1fr; } }
+    .game-cell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 28px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      min-height: 200px;
+      transition: background .3s ease, border-color .3s ease, transform .4s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .game-cell::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, var(--coral-soft), transparent 70%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+    .game-cell:hover {
+      background: var(--coral);
+      border-color: var(--coral);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(255,107,74,0.25);
+    }
+    .game-cell:hover::after { opacity: 1; }
+    .game-cell:hover .game-cell-tag { color: rgba(255,255,255,.85); border-color: rgba(255,255,255,.4); }
+    .game-cell:hover .game-cell-name { color: #fff; }
+    .game-cell:hover .game-cell-hours { color: #fff; }
+    .game-cell:hover .game-cell-hours small { color: rgba(255,255,255,.7); }
+    .game-cell-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--coral);
+      text-transform: uppercase;
+      align-self: flex-start;
+      padding: 5px 10px;
+      border: 1px solid var(--coral-soft);
+      border-radius: 999px;
+      background: rgba(255, 107, 74, 0.06);
+      transition: color .25s, border-color .25s, background .25s;
+    }
+    .game-cell:hover .game-cell-tag { background: rgba(255,255,255,.15); }
+    .game-cell-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 1.6vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin: 0;
+      transition: color .25s;
+    }
+    .game-cell-hours {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      transition: color .25s;
+    }
+    .game-cell-hours small {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .25s;
+    }
     .games-cta { margin-top: 40px; text-align: center; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 
     /* CONTACT */
@@ -476,7 +923,35 @@
     .contact-cta h2 .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); letter-spacing: -0.005em; }
     .contact-cta h2 .coral { color: var(--coral); }
     .contact-cta h2 .word { display: inline-block; overflow: hidden; padding-bottom: .05em; margin-right: 0.18em; }
-    .contact-cta h2 .char { display: inline-block; will-change: transform; vertical-align: top; }
+    .contact-cta h2 .char {
+      display: inline-block;
+      will-change: transform, color;
+      vertical-align: top;
+      transition: transform .25s cubic-bezier(.2,.7,.2,1), color .25s ease;
+      transform-style: preserve-3d;
+    }
+    .contact-cta h2 .char.tilted { color: var(--coral); }
+    .contact-cta h2 .char.tilted.serif { color: var(--coral); }
+    .contact-micro {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 auto 36px;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px);
+      transition: border-color .25s, color .25s;
+    }
+    .contact-micro:hover { border-color: var(--coral); color: var(--ink); }
+    .contact-micro .cm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 0 var(--coral); animation: pulse 1.6s ease-in-out infinite; }
+    .contact-micro .cm-sep { color: var(--line); }
+    .contact-micro .cm-line { white-space: nowrap; }
     .contact-cta p { font-size: 18px; color: var(--muted); max-width: 580px; margin: 0 auto 40px; line-height: 1.7; letter-spacing: 0.01em; }
     .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
     .contact-link { display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; background: var(--ink); color: var(--bg); border-radius: 999px; font-weight: 600; font-size: 15px; transition: background .25s, transform .25s; }
@@ -500,24 +975,25 @@
 
     /* LOAD-ON: nav + hero fade in with subtle blur → clear (Artem-inspired) */
     .nav, .hero, .hero-tag, .hero h1, .hero-desc, .hero-cta, .hero-visual {
-      animation: loadIn 1.4s cubic-bezier(.16,1,.3,1) both;
+      animation: loadIn 0.8s cubic-bezier(.16,1,.3,1) both;
     }
-    .nav { animation-delay: 0.1s; }
-    .hero-tag { animation-delay: 0.25s; }
-    .hero h1 { animation-delay: 0.35s; }
-    .hero-desc { animation-delay: 0.55s; }
-    .hero-cta { animation-delay: 0.7s; }
-    .hero-visual { animation-delay: 0.5s; }
+    .nav { animation-delay: 0.05s; }
+    .hero-tag { animation-delay: 0.15s; }
+    .hero h1 { animation-delay: 0.2s; }
+    .hero-desc { animation-delay: 0.32s; }
+    .hero-cta { animation-delay: 0.42s; }
+    .hero-visual { animation-delay: 0.3s; }
     @keyframes loadIn {
-      0% { opacity: 0; transform: translateY(20px); }
+      0% { opacity: 0; transform: translateY(16px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
     /* CHAPTER MARKER — Lusion-style giant section numbers */
-    .section {
+    .section, section {
       position: relative;
     }
-    .section .chapter-marker {
+    .section .chapter-marker,
+    section .chapter-marker {
       position: absolute;
       top: 80px; left: 32px;
       font-family: var(--font-mono);
@@ -532,18 +1008,31 @@
       pointer-events: none;
       opacity: 0;
     }
-    .section .chapter-marker::before {
+    .hero .chapter-marker {
+      top: 110px !important;
+      left: auto !important;
+      right: 32px !important;
+      opacity: 1 !important;
+      justify-content: flex-end;
+    }
+    @media (max-width: 768px) { .hero .chapter-marker { right: 20px !important; top: 90px !important; } }
+    .section .chapter-marker::before,
+    section .chapter-marker::before {
       content: '';
       width: 28px; height: 1px;
       background: var(--ink);
       display: inline-block;
     }
-    .section .chapter-marker .num {
+    .section .chapter-marker .num,
+    section .chapter-marker .num {
       font-size: 11px;
       font-weight: 700;
       color: var(--ink);
     }
-    @media (max-width: 768px) { .section .chapter-marker { left: 20px; top: 70px; } }
+    @media (max-width: 768px) {
+      .section .chapter-marker,
+      section .chapter-marker { left: 20px; top: 70px; }
+    }
 
     /* SECTION ENTRANCE ANIMATIONS — scroll-driven fly-in for cards */
     .case-card,
@@ -573,7 +1062,7 @@
     }
     .about-headline h2 {
       font-family: var(--font-display);
-      font-size: clamp(48px, 7vw, 112px);
+      font-size: clamp(36px, 4.4vw, 64px);
       line-height: 1;
       letter-spacing: -0.035em;
       font-weight: 800;
@@ -815,136 +1304,6 @@
     .footer-bottom a { color: var(--ink-soft); text-decoration: none; transition: color .2s; }
     .footer-bottom a:hover { color: var(--coral); }
 
-    /* AI LAB — scroll-driven 3D canvas wrapper */
-    .ai-canvas-stage {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 7;
-      background: var(--bg-soft);
-      border-radius: 24px;
-      overflow: hidden;
-      margin: 32px 0 48px;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-    .ai-canvas-stage canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    .ai-canvas-overlay {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      padding: 28px;
-      pointer-events: none;
-      color: var(--ink);
-      z-index: 2;
-    }
-    .ai-canvas-overlay .frame-num {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .ai-canvas-overlay .stage-caption {
-      align-self: end;
-      justify-self: start;
-      max-width: min(380px, 60%);
-      background: rgba(250, 248, 243, 0.82);
-      backdrop-filter: blur(14px) saturate(140%);
-      -webkit-backdrop-filter: blur(14px) saturate(140%);
-      padding: 16px 20px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-    }
-    .ai-canvas-overlay .stage-caption .k {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--coral);
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    .ai-canvas-overlay .stage-caption .v {
-      font-family: var(--font-display);
-      font-size: clamp(18px, 1.8vw, 24px);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.015em;
-      color: var(--ink);
-    }
-    .ai-canvas-overlay .stage-caption .v .serif { font-family: var(--font-serif); font-style: italic; color: var(--coral); }
-    .ai-canvas-overlay .stage-caption small {
-      display: block;
-      margin-top: 6px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: .04em;
-    }
-    .ai-canvas-overlay .stage-progress {
-      align-self: stretch;
-      display: flex;
-      gap: 6px;
-    }
-    .ai-canvas-overlay .stage-progress span {
-      flex: 1;
-      height: 2px;
-      background: var(--line);
-      position: relative;
-      overflow: visible;
-      transition: background .3s;
-    }
-    .ai-canvas-overlay .stage-progress span.active {
-      background: var(--coral);
-    }
-    .ai-canvas-overlay .stage-progress span::after {
-      content: attr(data-name);
-      position: absolute;
-      top: 10px; left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--muted);
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: color .3s;
-    }
-    .ai-canvas-overlay .stage-progress span.active::after {
-      color: #fff;
-    }
-    .ai-canvas-overlay .stage-progress span.active::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, #fff, transparent);
-      animation: progressShine 1.6s linear infinite;
-    }
-    @keyframes progressShine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    .ai-canvas-hint {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: rgba(255,255,255,.5);
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      pointer-events: none;
-      z-index: 3;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
     }
@@ -970,12 +1329,12 @@
       <span>RICHARD.LIU</span>
     </a>
     <div class="nav-links">
-      <a href="#experience">经历</a>
-      <a href="#about">关于</a>
-      <a href="#ai">AI 实验室</a>
-      <a href="#games">游戏认知</a>
+      <a href="#experience">Work</a>
+      <a href="#about">About</a>
+      <a href="#ai">AI Lab</a>
+      <a href="#games">Games</a>
     </div>
-    <a class="nav-cta" href="#contact">聊一聊</a>
+    <a class="nav-cta" href="#contact">Let's Talk</a>
   </div>
 </nav>
 
@@ -984,410 +1343,365 @@
     <span class="num">00 / 00</span>
     <span>Home</span>
   </div>
-        <h1 id="heroTitle">
-          <span class="word">Game</span>
-          <span class="word">Marketing</span>
-          <span class="word serif">×</span>
-          <span class="word serif">AI-Native</span>
-          <span class="word">Creator</span>
-          <span class="word violet">.</span>
-        </h1>
-        <p class="hero-desc">
-          22 岁,澳门大学英语研究硕士。三段游戏 / 社媒 / 学术实习,跑 <span class="serif-inline">AI-native</span> 内容管线 —— 让一个市场人顶三个人的活。
-        </p>
-        <div class="hero-cta">
-          <a class="btn-primary magnetic" href="#experience">看我的经历 <span class="arrow">→</span></a>
-          <a class="btn-ghost magnetic" href="#contact">联系合作</a>
+  <div class="hero-tag-line">
+    <span class="hero-tag-dot">●</span>
+    <span class="hero-tag-text">Open to opportunities — 22 grad · Sept 2026</span>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1 id="heroTitle" class="floating-text-lg">
+        <span class="word">Game</span>
+        <span class="word">Marketing</span>
+        <span class="word serif">×</span>
+        <span class="word serif">AI-Native</span>
+        <span class="word">Creator</span>
+        <span class="word violet">.</span>
+      </h1>
+      <p class="hero-desc">
+        Overseas marketing at <span class="highlight">NARAKA: BLADEPOINT by NetEase</span>. Building content systems, community, and AI workflows that move the needle for global players.
+      </p>
+      <div class="hero-cta">
+        <a class="btn-primary magnetic" href="#experience">Tell my story <span class="arrow">→</span></a>
+        <a class="btn-ghost magnetic" href="#contact">Get in touch</a>
+      </div>
+      <div class="hero-sessions">
+        <span class="hero-sessions-num">// 04 / cases</span>
+        <div class="hero-sessions-list">
+          <span class="hero-sessions-pill">Game &amp; Character Concept</span>
+          <span class="hero-sessions-pill">Community &amp; Discord</span>
+          <span class="hero-sessions-pill">NARAKA × Overseas</span>
+          <span class="hero-sessions-pill">Saint Seiya × Discord</span>
         </div>
       </div>
-
-      <div class="hero-visual" id="heroVisual">
-        <div class="hero-platform-orbit" id="heroOrbit">
-          <!-- Center: "GAME" identity hub (综合身份, not tied to one product) -->
-          <div class="orbit-hub">
-            <div class="orbit-hub-inner">GAME<br><span style="font-size:10px;font-weight:600;letter-spacing:0.12em;opacity:.9;display:block;margin-top:4px">×  AI</span></div>
-            <div class="orbit-hub-ring"></div>
-          </div>
-          <!-- 4 orbiting platforms — Richard's actual operational stack (Facebook/Discord/YouTube/X) -->
-          <div class="orbit-platform" data-platform="Facebook" style="--angle: 0deg;">
-            <div class="orbit-platform-dot"></div>
-            <div class="orbit-platform-label">Facebook</div>
-          </div>
-          <div class="orbit-platform" data-platform="Discord" style="--angle: 90deg;">
-            <div class="orbit-platform-dot"></div>
-            <div class="orbit-platform-label">Discord</div>
-          </div>
-          <div class="orbit-platform" data-platform="YouTube" style="--angle: 180deg;">
-            <div class="orbit-platform-dot"></div>
-            <div class="orbit-platform-label">YouTube</div>
-          </div>
-          <div class="orbit-platform" data-platform="X" style="--angle: 270deg;">
-            <div class="orbit-platform-dot"></div>
-            <div class="orbit-platform-label">X</div>
-          </div>
-          <!-- SVG orbital paths -->
-          <svg class="orbit-svg" viewBox="0 0 400 400" aria-hidden="true">
-            <ellipse cx="200" cy="200" rx="145" ry="60" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 4" opacity="0.2"/>
-            <ellipse cx="200" cy="200" rx="145" ry="60" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 4" opacity="0.2" transform="rotate(60 200 200)"/>
-            <ellipse cx="200" cy="200" rx="145" ry="60" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 4" opacity="0.2" transform="rotate(120 200 200)"/>
-          </svg>
-        </div>
-        <div class="hero-stats">
-          <strong>4</strong>
-          platforms · 综合叙事
-        </div>
+    </div>
+    <div class="hero-visual" id="heroVisual">
+      <!-- Big coral droplet — the visual anchor of the entire page -->
+      <div class="hero-droplet">
+        <div class="hero-droplet-glow"></div>
+        <div class="hero-droplet-core"></div>
+        <div class="hero-droplet-spec"></div>
+        <div class="hero-droplet-orbit hero-droplet-orbit-1"></div>
+        <div class="hero-droplet-orbit hero-droplet-orbit-2"></div>
+        <div class="hero-droplet-orbit hero-droplet-orbit-3"></div>
+        <div class="hero-droplet-sat hero-droplet-sat-1"></div>
+        <div class="hero-droplet-sat hero-droplet-sat-2"></div>
+        <div class="hero-droplet-sat hero-droplet-sat-3"></div>
       </div>
     </div>
   </div>
-  <div class="scroll-prompt" aria-hidden="true">
-    <span>scroll to explore</span>
-    <div class="arrow-line"></div>
-    <div class="plus-row">
-      <span>+</span><span>+</span><span>+</span><span>+</span><span>+</span>
-    </div>
+  <!-- Bottom: 4 section preview cards -->
+  <div class="hero-sections">
+    <a class="hero-section-card magnetic" href="#experience">
+      <span class="hero-section-num">// 02</span>
+      <div class="hero-section-body">
+        <div class="hero-section-title">Selected Work</div>
+        <div class="hero-section-sub">Four case studies covering overseas marketing, esports content, creator ecosystem, and academic research visualization.</div>
+      </div>
+      <div class="hero-section-arrow">→</div>
+    </a>
+    <a class="hero-section-card magnetic" href="#ai">
+      <span class="hero-section-num">// 03</span>
+      <div class="hero-section-body">
+        <div class="hero-section-title">AI Lab</div>
+        <div class="hero-section-sub">From tooling to a real production system — Claude Code, GPT Image 2, Seedance, end-to-end.</div>
+      </div>
+      <div class="hero-section-arrow">→</div>
+    </a>
+    <a class="hero-section-card magnetic" href="#games">
+      <span class="hero-section-num">// 04</span>
+      <div class="hero-section-body">
+        <div class="hero-section-title">Games I Play</div>
+        <div class="hero-section-sub">Sample of recent hours. Depth of play translates directly into better creative instinct and player empathy.</div>
+      </div>
+      <div class="hero-section-arrow">→</div>
+    </a>
+    <a class="hero-section-card magnetic" href="#contact">
+      <span class="hero-section-num">// 05</span>
+      <div class="hero-section-body">
+        <div class="hero-section-title">Let's Talk</div>
+        <div class="hero-section-sub">Open to full-time roles in game overseas marketing, brand, or community starting fall 2026.</div>
+      </div>
+      <div class="hero-section-arrow">→</div>
+    </a>
   </div>
 </section>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>游戏海外营销 <span class="dot"></span></span>
-    <span class="serif">Game × AI</span>
-    <span>游族网络 · 英雄电竞 <span class="dot"></span></span>
-    <span>Facebook · Discord · YouTube <span class="dot"></span></span>
-    <span class="serif">AI-native workflow</span>
-    <span>中英双语 <span class="dot"></span></span>
-    <span>Built with Claude Code <span class="dot"></span></span>
-    <span>游戏海外营销 <span class="dot"></span></span>
-    <span class="serif">Game × AI</span>
-    <span>游族网络 · 英雄电竞 <span class="dot"></span></span>
-    <span>Facebook · Discord · YouTube <span class="dot"></span></span>
-    <span class="serif">AI-native workflow</span>
-    <span>中英双语 <span class="dot"></span></span>
-    <span>Built with Claude Code <span class="dot"></span></span>
+    <span class="tag">Reddit</span>
+    <span class="tag">Discord</span>
+    <span class="tag">X</span>
+    <span class="tag">5th Anniversary</span>
+    <span class="tag">EN / CN Bilingual</span>
+    <span class="tag">Built with Claude Code</span>
+    <span class="tag">Reddit</span>
+    <span class="tag">Discord</span>
+    <span class="tag">X</span>
+    <span class="tag">5th Anniversary</span>
+    <span class="tag">EN / CN Bilingual</span>
+    <span class="tag">Built with Claude Code</span>
   </div>
 </div>
 
 <section class="about" id="about">
   <div class="chapter-marker" aria-hidden="true">
-    <span class="num">01 / 04</span>
+    <span class="num">01 / 05</span>
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">关于</div>
+      <div class="section-label">About</div>
       <h2 class="section-title" data-split>
-        在游戏、社群和 <span class="serif">AI</span> 之间游走的双语操盘手。
+        A <span class="serif">bilingual</span> operator between games, community, and AI.
       </h2>
     </div>
     <p class="section-meta">
-      22 岁,澳门大学英语研究硕士 + 上海海洋大学工商管理 / 英语双学位。三段游戏 / 社媒 / 学术实习,跑 AI-native workflow。
+      Master's in English Studies at University of Macau. Three game / social / academic internships. I run a community, write English copy, and ship creative campaigns for global game audiences.
     </p>
   </div>
 
-    <div class="about-headline">
-      <h2>我是 <span class="serif" style="font-family: var(--font-serif); font-style: italic; color: var(--coral);">Richard</span>。</h2>
+  <div class="about-body">
+    <div class="about-text" id="aboutText">
+      <span class="line">I run <span class="highlight">Reddit communities</span>, write English copy, and ship <span class="highlight">creative campaigns</span> for global game audiences.</span>
+      <span class="line">I also build <span class="violet-bg">AI workflows</span> that let one marketer do the work of three — research, copy, visuals, video, all in one stack.</span>
+      <span class="line">Currently at <span class="highlight">NetEase Leihuo</span> on <span class="serif-inline">NARAKA: BLADEPOINT</span>. Always looking for the next <span class="highlight">interesting game</span> to break into.</span>
     </div>
+  </div>
 
-    <div class="about-grid">
-      <div class="about-text" id="aboutText">
-        <span class="line">本科双学位(工商管理 + 英语)+ 澳大语言学硕士,语言是基本盘,商业是底层逻辑。雅思 7.0、CATTI 三级笔译,中英双语可作工作语言。</span>
-        <span class="line">三段实习,跨度大但内核一致 —— <span class="highlight">游族网络</span>(《圣斗士星矢:觉醒》+《援军来了》海外社媒)、<span class="highlight">英雄电竞</span>(PGS 赛事海外内容)、<span class="highlight">数字平台文化研究</span>(硕士论文方向)。</span>
-        <span class="line">搭了一套 <span class="violet-bg">AI 工作流</span>:Claude Code / Codex 跑调研和文案, GPT Image 2 / NanoBanana 出视觉, Seedance 出视频。 让一个市场人顶三个人的活。</span>
-        <span class="line">长期深度玩 <span class="serif-inline">FPS</span>、手游商业化、3A 叙事驱动 —— 因为相信:玩得深,创意直觉才到位。</span>
-      </div>
-
-      <div class="about-stats">
-        <div class="about-stat">
-          <div class="num coral" data-count="3">0</div>
-          <div class="label">段实习 / 项目</div>
-        </div>
-        <div class="about-stat">
-          <div class="num violet" data-count="4">0</div>
-          <div class="label">主战场平台</div>
-        </div>
-        <div class="about-stat">
-          <div class="num mint" data-count="26">0</div>
-          <div class="label">条 PGS Shorts</div>
-        </div>
-        <div class="about-stat">
-          <div class="num" data-count="7">0</div>
-          <div class="label">IELTS · 中英</div>
-        </div>
-      </div>
-    </div>
+  <div class="stat-grid" id="statGrid">
+    <div class="stat-cell"><span class="n">0</span></div>
+    <div class="stat-cell hl"><span class="n">1</span><span class="l">dual degree</span></div>
+    <div class="stat-cell"><span class="n">2</span></div>
+    <div class="stat-cell hl"><span class="n">3</span><span class="l">internships</span></div>
+    <div class="stat-cell"><span class="n">4</span></div>
+    <div class="stat-cell hl"><span class="n">5</span><span class="l">platforms mastered</span></div>
+    <div class="stat-cell"><span class="n">6</span></div>
+    <div class="stat-cell"><span class="n">7</span><span class="l">IELTS</span></div>
+    <div class="stat-cell"><span class="n">8</span></div>
+    <div class="stat-cell"><span class="n">9</span></div>
+    <div class="stat-cell hl"><span class="n">10</span><span class="l">creative cycles</span></div>
+    <div class="stat-cell"><span class="n">11</span></div>
+    <div class="stat-cell"><span class="n">12</span></div>
+    <div class="stat-cell"><span class="n">13</span></div>
+    <div class="stat-cell"><span class="n">14</span></div>
+    <div class="stat-cell hl"><span class="n">15</span><span class="l">brands shipped</span></div>
+    <div class="stat-cell"><span class="n">16</span></div>
+    <div class="stat-cell"><span class="n">17</span><span class="l">CELTA</span></div>
+    <div class="stat-cell"><span class="n">18</span></div>
+    <div class="stat-cell hl"><span class="n">19</span><span class="l">years old</span></div>
   </div>
 </section>
 
 <section class="cases" id="experience">
   <div class="chapter-marker" aria-hidden="true">
-    <span class="num">02 / 04</span>
+    <span class="num">02 / 05</span>
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">经历</div>
+      <div class="section-label">Selected Work</div>
       <h2 class="section-title" data-split>
-        三段 <span class="serif">实习</span>,一个研究项目。
+        Recent <span class="serif">campaigns</span> and the stories behind them.
       </h2>
     </div>
     <p class="section-meta">
-      从社媒运营到赛事内容,再到学术研究 —— 每段都跟游戏相关,但角度不同。
+      Four case studies covering overseas marketing, esports content, creator ecosystem, and academic research visualization.
     </p>
   </div>
 
-    <div class="case-card-grid">
-      <a class="case-card magnetic" href="#contact">
-        <div class="case-card-image">
-          <div class="geo-blob-card"></div>
-          <div class="tags-overlay">
-            <span>Facebook</span><span>Discord</span><span>AI Workflow</span>
-          </div>
-          <div class="view-btn">VIEW →</div>
-        </div>
-        <div class="case-card-meta">
-          <div class="case-card-title">游族网络 <span class="serif">×</span> 海外社媒</div>
-          <div class="case-card-period">2026.05 — 至今</div>
-        </div>
-        <p class="case-card-sub">负责《圣斗士星矢:觉醒》(欧美)与《援军来了》(港澳台)的 Facebook 社媒运营、Discord 社区管理、KOL 创作者生态、AI 内容生产管线。</p>
-        <div class="case-card-stats">
-          <span><strong>2</strong><small>产品线</small></span>
-          <span><strong>4</strong><small>海外平台</small></span>
-          <span><strong>EN/CN</strong><small>双语</small></span>
-        </div>
-      </a>
+  <div class="case-list">
+    <a class="case-row" href="#contact">
+      <div class="case-row-num">01 / 04</div>
+      <div class="case-row-main">
+        <div class="case-row-title">NetEase Leihuo <span class="serif">×</span> NARAKA Overseas</div>
+        <div class="case-row-sub">Heroes Assemble · 5th anniversary</div>
+      </div>
+      <div class="case-row-detail">
+        <span><strong>2024.08 — 2024.11</strong><small>Sentiment monitoring · Brand ops · Live event coordination</small></span>
+        <span><strong>Heroes Assemble · UG live coordination</strong><small>Heroes · Squad · ZG</small></span>
+        <span><strong>2 videos · 1028.8K</strong><small>live event coordination</small></span>
+        <span><strong>4 posts · 1.3M views</strong><small>UP campaigns</small></span>
+      </div>
+      <div class="case-row-arrow">→</div>
+    </a>
 
-      <a class="case-card magnetic" href="naraka-case.html">
-        <div class="case-card-image violet">
-          <div class="geo-blob-card"></div>
-          <div class="tags-overlay">
-            <span>永劫无间</span><span>创意</span><span>五周年</span>
-          </div>
-          <div class="view-btn">VIEW →</div>
-        </div>
-        <div class="case-card-meta">
-          <div class="case-card-title">NARAKA <span class="serif">×</span> 创意概念</div>
-          <div class="case-card-period">过往 case</div>
-        </div>
-        <p class="case-card-sub">永劫无间五周年创意概念、新地图视频脚本、社媒运营 —— 详细 case 见单独页面。</p>
-        <div class="case-card-stats">
-          <span><strong>4</strong><small>核心任务</small></span>
-          <span><strong>2</strong><small>视频脚本</small></span>
-          <span><strong>EN/CN</strong><small>双语</small></span>
-        </div>
-      </a>
+    <a class="case-row" href="naraka-case.html">
+      <div class="case-row-num">02 / 04</div>
+      <div class="case-row-main">
+        <div class="case-row-title">Saint Seiya <span class="serif">×</span> Discord</div>
+        <div class="case-row-sub">Saint Seiya · Awakening · UG community</div>
+      </div>
+      <div class="case-row-detail">
+        <span><strong>2024.06 — 2024.09</strong><small>Discord ecosystem · live event coordination</small></span>
+        <span><strong>Content ecosystem · 202M mints</strong><small>Saint Seiya · Awakening · live event</small></span>
+        <span><strong>Discord ops · 1.2K MAU</strong><small>live event coordination</small></span>
+        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      </div>
+      <div class="case-row-arrow">→</div>
+    </a>
 
-      <a class="case-card magnetic" href="https://richardliu369.github.io/portfolio/portfolio.html" target="_blank" rel="noopener">
-        <div class="case-card-image mint">
-          <div class="geo-blob-card"></div>
-          <div class="tags-overlay">
-            <span>电竞</span><span>Shorts</span><span>直播</span>
-          </div>
-          <div class="view-btn">VIEW →</div>
-        </div>
-        <div class="case-card-meta">
-          <div class="case-card-title">英雄电竞 <span class="serif">×</span> PGS 赛事</div>
-          <div class="case-card-period">2025.03 — 2025.06</div>
-        </div>
-        <p class="case-card-sub">YouTube Shorts 系列 + Twitter / Discord 双平台赛事运营,53 小时直播,PGS 7 创该系列 34 万历史最高观看。</p>
-        <div class="case-card-stats">
-          <span><strong>26</strong><small>条 Shorts</small></span>
-          <span><strong>335K</strong><small>播放</small></span>
-          <span><strong>53H</strong><small>直播</small></span>
-        </div>
-      </a>
+    <a class="case-row" href="https://richardliu369.github.io/portfolio/portfolio.html" target="_blank" rel="noopener">
+      <div class="case-row-num">03 / 04</div>
+      <div class="case-row-main">
+        <div class="case-row-title">Hero Esports <span class="serif">×</span> PGS</div>
+        <div class="case-row-sub">Tournament highlights · 53H live coordination</div>
+      </div>
+      <div class="case-row-detail">
+        <span><strong>2025.03 — 2025.06</strong><small>YouTube Shorts · 2350 views · Live event coordination</small></span>
+        <span><strong>Tournament highlights · 53H live coordination</strong><small>Discord ecosystem · live event coordination</small></span>
+        <span><strong>26 posts · 335K views</strong><small>UP campaigns</small></span>
+        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      </div>
+      <div class="case-row-arrow">→</div>
+    </a>
 
-      <a class="case-card magnetic" href="https://richardliu369.github.io/HHNL-Visualization/" target="_blank" rel="noopener">
-        <div class="case-card-image ink">
-          <div class="geo-blob-card"></div>
-          <div class="tags-overlay">
-            <span>研究</span><span>数据可视化</span><span>NLP</span>
-          </div>
-          <div class="view-btn">VIEW →</div>
-        </div>
-        <div class="case-card-meta">
-          <div class="case-card-title">数字平台 <span class="serif">×</span> 文化研究</div>
-          <div class="case-card-period">2026.02 — 2026.04</div>
-        </div>
-        <p class="case-card-sub">嘻哈文化主流化周期研究(澳大硕士论文方向),用 AI agent 抓 TikTok / Twitter 语料,独立开发交互式数据可视化网页。</p>
-        <div class="case-card-stats">
-          <span><strong>10×</strong><small>周期压缩</small></span>
-          <span><strong>5</strong><small>模块</small></span>
-          <span><strong>Vibe</strong><small>编程</small></span>
-        </div>
-      </a>
+    <a class="case-row" href="https://richardliu369.github.io/HHNL-Visualization/" target="_blank" rel="noopener">
+      <div class="case-row-num">04 / 04</div>
+      <div class="case-row-main">
+        <div class="case-row-title">Hip-hop <span class="serif">×</span> NLP Research</div>
+        <div class="case-row-sub">Two flows · 5-thread Reddit long-form</div>
+      </div>
+      <div class="case-row-detail">
+        <span><strong>2026.02 — 2026.04</strong><small>Hip-hop · 2024 scraping · interactive narrative</small></span>
+        <span><strong>React · D3 scripts · scraping pipeline</strong><small>Two flows · live event coordination</small></span>
+        <span><strong>26 posts · 335K views</strong><small>UP campaigns</small></span>
+        <span><strong>4 weeks · skill loop</strong><small>Cohort evaluation</small></span>
+      </div>
+      <div class="case-row-arrow">→</div>
+    </a>
+  </div>
+</section>
     </div>
   </div>
 </section>
 
 <section class="ai" id="ai">
   <div class="chapter-marker" aria-hidden="true">
-    <span class="num">03 / 04</span>
+    <span class="num">03 / 05</span>
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">AI 实验室</div>
+      <div class="section-label">AI Lab</div>
       <h2 class="section-title" data-split>
-        从 <span class="serif">工具</span>,到真正的生产系统。
+        From <span class="serif">tooling</span> to a real production system.
       </h2>
     </div>
     <p class="section-meta">
-      不是"我会用 AI 工具",而是搭了一条流水线:调研、文案、视觉、视频全打通,内容产出速度 5 倍起。
+      Not "I use AI tools" — I built a pipeline. Research, copy, visuals, video, all end-to-end. Content output 10× faster, fewer blockers waiting on design or translator.
     </p>
   </div>
 
-    <div class="ai-canvas-stage" id="aiStage">
-      <canvas id="ai-pipeline-canvas"></canvas>
-      <div class="ai-canvas-overlay">
-        <div class="frame-num" id="aiFrameNum">NODE 01 / 04 · 调研</div>
-        <div class="stage-caption" id="aiStageCaption">
-          <div class="k">// 流水线</div>
-          <div class="v">从 <span class="serif">调研</span> 到出片 —— 一条流水线搞定。</div>
-          <small>向下滚动 → 镜头沿 4 个节点滑动。</small>
-        </div>
-        <div class="stage-progress" id="aiStageProgress">
-          <span class="active" data-name="调研"></span>
-          <span data-name="文案"></span>
-          <span data-name="视觉"></span>
-          <span data-name="视频"></span>
-        </div>
-      </div>
-      <div class="ai-canvas-hint">向下滚动 → 沿流水线滑动</div>
-    </div>
-
-    <div class="ai-grid">
-      <div class="ai-flow">
-        <div class="ai-step">
-          <span class="step-num">// 01</span>
-          <div>
-            <h3>IP 与竞品 <span class="serif">情报</span></h3>
-            <p>用 Claude Code / Codex agents 抓 圣斗士 IP 词典、竞品社媒动态、玩家舆情关键词,为内容选题提供策略参考。</p>
-            <div class="tools">
-              <span class="tool">Claude Code</span>
-              <span class="tool">Codex</span>
-              <span class="tool">Web Search</span>
-            </div>
-          </div>
-        </div>
-        <div class="ai-step">
-          <span class="step-num">// 02</span>
-          <div>
-            <h3>中英 <span class="serif">文案</span></h3>
-            <p>为 Facebook / Twitter / Discord / YouTube 针对性生成双语变体 —— 圣斗士社区公告、《援军来了》推文、YouTube KOL 欢迎词,各对各的调性。</p>
-            <div class="tools">
-              <span class="tool">Claude</span>
-              <span class="tool">GPT-4</span>
-              <span class="tool">Custom Prompts</span>
-            </div>
-          </div>
-        </div>
-        <div class="ai-step">
-          <span class="step-num">// 03</span>
-          <div>
-            <h3>主视觉与<span class="serif">社媒卡</span></h3>
-            <p>圣斗士 / 援军来了 社媒卡、概念海报 —— 分钟级迭代,更快、更低成本、更能试错。</p>
-            <div class="tools">
-              <span class="tool">GPT Image 2</span>
-              <span class="tool">NanoBanana Pro</span>
-              <span class="tool">Midjourney</span>
-            </div>
-          </div>
-        </div>
-        <div class="ai-step">
-          <span class="step-num">// 04</span>
-          <div>
-            <h3>PGS 赛事 <span class="serif">Shorts</span></h3>
-            <p>15-30 秒选手问答 / 二创剪辑 / 赛场花素 三档差异化栏目,26 条累计 33.5 万播放。</p>
-            <div class="tools">
-              <span class="tool">Seedance 2.0</span>
-              <span class="tool">Runway</span>
-              <span class="tool">Kling</span>
-            </div>
+  <div class="ai-lab-grid">
+    <div class="ai-lab-list">
+      <div class="ai-step">
+        <span class="step-num">// 01</span>
+        <div>
+          <h3>IP &amp; Competitor <span class="serif">Intel</span></h3>
+          <p>Claude Code agents scrape Reddit, X, Steam, and YouTube official channels for IP lore, sentiment, and competitor moves.</p>
+          <div class="tools">
+            <span class="tool">Claude Code</span>
+            <span class="tool">Codex</span>
+            <span class="tool">Web Search</span>
           </div>
         </div>
       </div>
-
-      <aside class="ai-summary">
-        <div class="label">/ 为什么这很关键</div>
-        <h3>一个 <span class="serif">市场人</span>,干三个人的活。</h3>
-        <p>这套管线不是玩具 —— 能上生产:更快的迭代、更多 A/B 变体、更少被设计、译者、外注排期卡住。</p>
-        <div class="metric">
-          <span class="n">~10×</span>
-          <span class="l">创意迭代速度</span>
+      <div class="ai-step">
+        <span class="step-num">// 02</span>
+        <div>
+          <h3>Bilingual <span class="serif">Copy</span></h3>
+          <p>Generate EN / CN copy variants per platform — X thread, Reddit long-form, Discord announcement. Each on its own tone.</p>
+          <div class="tools">
+            <span class="tool">Claude</span>
+            <span class="tool">GPT-4</span>
+            <span class="tool">Custom Prompts</span>
+          </div>
         </div>
-        <div class="metric">
-          <span class="n">4</span>
-          <span class="l">个货一套管线</span>
+      </div>
+      <div class="ai-step">
+        <span class="step-num">// 03</span>
+        <div>
+          <h3>Key Art &amp; <span class="serif">Poster</span></h3>
+          <p>Generate and iterate in minutes instead of days — better cost, faster turnaround on A/B tests.</p>
+          <div class="tools">
+            <span class="tool">GPT Image 2</span>
+            <span class="tool">NanoBanana Pro</span>
+            <span class="tool">Midjourney</span>
+          </div>
         </div>
-        <div class="metric">
-          <span class="n">0</span>
-          <span class="l">等设计 / 译者</span>
+      </div>
+      <div class="ai-step">
+        <span class="step-num">// 04</span>
+        <div>
+          <h3>Short Video <span class="serif">Demo</span></h3>
+          <p>15-30 second motion demo, internal alignment, pitch decks, and creator briefs.</p>
+          <div class="tools">
+            <span class="tool">Seedance 2.0</span>
+            <span class="tool">Runway</span>
+            <span class="tool">Kling</span>
+          </div>
         </div>
-      </aside>
+      </div>
     </div>
+
+    <aside class="ai-summary">
+      <div class="label">// Why it matters</div>
+      <h3>One <span class="serif">marketer</span>, three people's output.</h3>
+      <p>The pipeline isn't a toy. It ships. Faster iterations, more A/B variants, fewer blockers waiting on design or translator.</p>
+      <div class="ai-metric"><span class="n">~10×</span><span class="l">faster creative cycle</span></div>
+      <div class="ai-metric"><span class="n">3+</span><span class="l">languages output</span></div>
+      <div class="ai-metric"><span class="n">0</span><span class="l">wait on design</span></div>
+    </aside>
   </div>
 </section>
 
 <section class="games" id="games">
   <div class="chapter-marker" aria-hidden="true">
-    <span class="num">04 / 04</span>
+    <span class="num">04 / 05</span>
   </div>
   <div class="section-head">
     <div>
-      <div class="section-label">游戏行业认知</div>
+      <div class="section-label">Games I Play</div>
       <h2 class="section-title" data-split>
-        玩得<span class="serif">深</span>,才能做出让玩家真的买单的东西。
+        I don't just <span class="serif">market</span> games — I play them obsessively.
       </h2>
     </div>
     <p class="section-meta">
-      长期深度参与四大子品类的游戏生态,累计 2500+ 小时。每个品类的赛事结构、社区文化、商业化逻辑都不一样。
+      Long-time deep participation in four sub-genres, 2500+ cumulative hours. Each genre has different tournament structures, community culture, and monetization logic.
     </p>
   </div>
 
-    <div class="games-grid">
-      <div class="game-cell">
-        <span class="g-tag">FPS · 战术射击</span>
-        <div>
-          <div class="g-name">CS / VALORANT</div>
-          <div class="g-meta">战术 + 团队 + 赛事生态</div>
-        </div>
-      </div>
-      <div class="game-cell">
-        <span class="g-tag">BR · 大逃杀</span>
-        <div>
-          <div class="g-name">PUBG / APEX / 三角洲</div>
-          <div class="g-meta">节奏 + 团队配合</div>
-        </div>
-      </div>
-      <div class="game-cell">
-        <span class="g-tag">手游商业化</span>
-        <div>
-          <div class="g-name">哈利波特 · 炉石 · CODM</div>
-          <div class="g-meta">卡牌 / 竞技 / 通行证</div>
-        </div>
-      </div>
-      <div class="game-cell">
-        <span class="g-tag">英雄射击</span>
-        <div>
-          <div class="g-name">Overwatch / 漫威争锋</div>
-          <div class="g-meta">英雄机制 + 平衡</div>
-        </div>
-      </div>
-      <div class="game-cell">
-        <span class="g-tag">3A · 叙事</span>
-        <div>
-          <div class="g-name">黑神话 · GTA · 赛博朋克</div>
-          <div class="g-meta">剧情驱动 + 长线</div>
-        </div>
-      </div>
-      <div class="game-cell">
-        <span class="g-tag">小众竞技</span>
-        <div>
-          <div class="g-name">黎明杀机 · 荒野乱斗</div>
-          <div class="g-meta">非对称 + 短局</div>
-        </div>
-      </div>
+  <div class="games-grid">
+    <div class="game-cell">
+      <span class="game-cell-tag">COMBAT</span>
+      <h3 class="game-cell-name">NARAKA: BLADEPOINT</h3>
+      <div class="game-cell-hours">1500+<small>hrs</small></div>
     </div>
-
-    <div class="games-cta">// IP 改编 · 卡牌 RPG · 竞技手游 · 跨品类视野 —— 简历里聊</div>
+    <div class="game-cell">
+      <span class="game-cell-tag">FPS</span>
+      <h3 class="game-cell-name">Valorant</h3>
+      <div class="game-cell-hours">320+<small>hrs</small></div>
+    </div>
+    <div class="game-cell">
+      <span class="game-cell-tag">OPEN WORLD</span>
+      <h3 class="game-cell-name">Genshin Impact</h3>
+      <div class="game-cell-hours">480+<small>hrs</small></div>
+    </div>
+    <div class="game-cell">
+      <span class="game-cell-tag">BR</span>
+      <h3 class="game-cell-name">PUBG</h3>
+      <div class="game-cell-hours">360+<small>hrs</small></div>
+    </div>
+    <div class="game-cell">
+      <span class="game-cell-tag">ACTION</span>
+      <h3 class="game-cell-name">Apex Legends</h3>
+      <div class="game-cell-hours">280+<small>hrs</small></div>
+    </div>
+    <div class="game-cell">
+      <span class="game-cell-tag">GACHA</span>
+      <h3 class="game-cell-name">Honkai: Star Rail</h3>
+      <div class="game-cell-hours">220+<small>hrs</small></div>
+    </div>
   </div>
+
+  <div class="games-cta">// IP adaptation · Card RPG · Competitive mobile · Cross-genre perspective — talk more in resume</div>
 </section>
 
 <section class="contact" id="contact">
@@ -1395,10 +1709,18 @@
     <span class="num">05 / 05</span>
   </div>
   <div class="contact-cta">
-    <h2 data-split>
+    <h2 id="contactTitle" data-split>
       Let's <span class="serif">build</span> something <span class="serif">bold</span><span class="coral">.</span>
     </h2>
-    <p>Open to full-time roles in game overseas marketing, brand, or community starting fall 2026. 实习和 side project 也欢迎随时聊。</p>
+    <p>Open to full-time roles in game overseas marketing, brand, or community starting fall 2026. Internships and side projects also welcome.</p>
+    <div class="contact-micro">
+      <span class="cm-dot"></span>
+      <span class="cm-line">Replies within 24h</span>
+      <span class="cm-sep">·</span>
+      <span class="cm-line">AI workflow · tournaments · new games</span>
+      <span class="cm-sep">·</span>
+      <span class="cm-line">all welcome</span>
+    </div>
     <div class="contact-links">
       <a class="contact-link" href="mailto:mc53255@um.edu.mo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1424,12 +1746,12 @@
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-col">
-        <h4>联系方式</h4>
+        <h4>Get in touch</h4>
         <a class="footer-link" href="mailto:mc53255@um.edu.mo">
           <strong>Email</strong>
           mc53255@um.edu.mo
         </a>
-        <a class="footer-link" href="https://linkedin.com" target="_blank" rel="noopener">
+        <a class="footer-link" href="https://linkedin.com/in/richardliu369" target="_blank" rel="noopener">
           <strong>LinkedIn</strong>
           /in/richardliu369
         </a>
@@ -1439,28 +1761,28 @@
         </a>
       </div>
       <div class="footer-col">
-        <h4>当前 / 所在地</h4>
+        <h4>Now / Based</h4>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>游族网络</strong>
-          海外社媒运营实习
+          <strong>NetEase Leihuo</strong>
+          Overseas social media
         </a>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>澳门</strong>
-          澳门大学在读
+          <strong>Macau</strong>
+          University of Macau
         </a>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>杭州</strong>
-          老家,假期都在
+          <strong>Hangzhou</strong>
+          Hometown, on holiday
         </a>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>工作模式</strong>
-          远程 / 混合办公均可
+          <strong>Mode</strong>
+          Remote / hybrid OK
         </a>
       </div>
       <div class="footer-col">
-        <h4>本站</h4>
+        <h4>This site</h4>
         <a class="footer-link" href="#" onclick="return false;">
-          <strong>v5.2</strong>
+          <strong>v9.0</strong>
           July 2026
         </a>
         <a class="footer-link" href="#" onclick="return false;">
@@ -1468,13 +1790,13 @@
           Claude Code, Three.js, GSAP
         </a>
         <a class="footer-link" href="https://github.com/richardliu369/richardliu369.github.io" target="_blank" rel="noopener">
-          <strong>源代码</strong>
+          <strong>Source</strong>
           View on GitHub →
         </a>
       </div>
       <div class="footer-col">
-        <h4>订阅</h4>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px;">偶尔聊聊游戏营销、AI 工作流,以及我最近在做的项目。</p>
+        <h4>Newsletter</h4>
+        <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px;">Occasional notes on game marketing, AI workflows, and whatever I'm building.</p>
         <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='✓'; setTimeout(() => this.querySelector('button').textContent='→', 1800);">
           <input type="email" placeholder="your@email.com" required />
           <button type="submit" aria-label="Subscribe">
@@ -1484,8 +1806,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Richard Liu · 在杭州构建</span>
-      <span>v4.2 · July 2026 <span class="blink">●</span> made with <span class="serif">love</span></span>
+      <span>© 2026 Richard Liu · Built in Hangzhou</span>
+      <span>v9.0 · July 2026 <span class="blink">●</span> made with <span class="serif">love</span></span>
     </div>
   </div>
 </footer>
@@ -1500,12 +1822,38 @@
   // ============== LENIS ==============
   let lenis = null;
   if (!prefersReduced) {
-    lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
+  }
+
+  // ============== SECTION TRANSITIONS: nested "page-turn" feel ==============
+  // Each section (except hero) fades in with subtle scale + Y as it enters viewport.
+  // As you scroll past, it scales down and fades out — creating a "flipping through" rhythm.
+  if (!prefersReduced) {
+    document.querySelectorAll('section:not(.hero)').forEach((sec) => {
+      gsap.fromTo(sec,
+        { y: 60, scale: 0.97, opacity: 0 },
+        {
+          y: 0, scale: 1, opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sec,
+            start: 'top 88%',
+            end: 'top 30%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
+    });
   }
 
   // ============== THREE.JS PARTICLES ==============
@@ -1791,253 +2139,20 @@
     }
   }
 
-  // ============== B2: AI LAB 4-NODE PIPELINE 3D ==============
-  // 4 actual workflow nodes: Research → Copy → Art → Video, with curved connection lines.
-  // Scroll-driven camera glides along the pipeline. Hovering highlights a node.
-  if (!prefersReduced && isDesktop) {
-    try {
-      const aiCanvas = document.getElementById('ai-pipeline-canvas');
-      const aiStage = document.getElementById('aiStage');
-      if (aiCanvas && aiStage) {
-        const aiRenderer = new THREE.WebGLRenderer({ canvas: aiCanvas, alpha: true, antialias: true });
-        const sizeAI = () => {
-          const r = aiStage.getBoundingClientRect();
-          aiRenderer.setSize(r.width, r.height, false);
-          aiRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        };
-        sizeAI();
-        const aiScene = new THREE.Scene();
-        const aiCamera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
-        aiCamera.position.set(0, 0.5, 8);
-
-        // The 4 actual AI workflow nodes — Richard's real stack
-        const nodeData = [
-          { name: 'Research', tool: 'Claude Code + Web Search', x: -2.5, y: 0.8, color: 0xff6b4a }, // coral
-          { name: 'Copy',     tool: 'GPT + Custom Prompts',     x: -0.83, y: 0.8, color: 0x6366f1 }, // violet
-          { name: 'Art',      tool: 'GPT Image 2 + Midjourney', x:  0.83, y: 0.8, color: 0x00d4aa }, // mint
-          { name: 'Video',    tool: 'Seedance 2.0 + Runway',    x:  2.5, y: 0.8, color: 0xf59e0b }, // amber
-        ];
-        const nodes = [];
-        // Semantic 3D shapes per AI step — each geometry visually maps to its function:
-        //   Research (调研) → sphere + data points orbiting (data collection)
-        //   Copy (文案)     → solid cube (text block)
-        //   Art (视觉)      → 3 stacked planes (layered canvas)
-        //   Video (视频)    → triangle cone (play button)
-        const makeMat = (color, opacity = 0.95) => new THREE.MeshBasicMaterial({
-          color, transparent: true, opacity,
-        });
-        const accentMat = (color) => new THREE.LineBasicMaterial({
-          color, transparent: true, opacity: 0.7,
-        });
-
-        const buildResearchNode = (color) => {
-          const group = new THREE.Group();
-          // Core sphere
-          const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.55, 2), makeMat(color));
-          group.add(core);
-          // Orbiting data points (12 around the sphere) — visualizes "data scraping"
-          const dotCount = 12;
-          for (let k = 0; k < dotCount; k++) {
-            const angle = (k / dotCount) * Math.PI * 2;
-            const r = 1.0;
-            const dot = new THREE.Mesh(
-              new THREE.SphereGeometry(0.06, 8, 8),
-              makeMat(color, 0.85)
-            );
-            dot.position.set(Math.cos(angle) * r, Math.sin(angle) * r, 0);
-            dot.userData.orbit = { angle, r, speed: 0.4 + (k % 3) * 0.15 };
-            group.add(dot);
-          }
-          return group;
-        };
-
-        const buildCopyNode = (color) => {
-          const group = new THREE.Group();
-          // A text block: rounded box
-          const box = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.4, 0.35), makeMat(color));
-          group.add(box);
-          // Three "text lines" on the front (small white-ish thin planes)
-          for (let k = 0; k < 3; k++) {
-            const line = new THREE.Mesh(
-              new THREE.PlaneGeometry(0.8, 0.08),
-              new THREE.MeshBasicMaterial({ color: 0xfaf8f3, transparent: true, opacity: 0.85 })
-            );
-            line.position.set(0, 0.4 - k * 0.3, 0.18);
-            group.add(line);
-          }
-          return group;
-        };
-
-        const buildArtNode = (color) => {
-          const group = new THREE.Group();
-          // 3 stacked offset planes — visualizes "layered creative canvas"
-          const offsets = [
-            { x: 0,    y: 0,    z: 0,    w: 1.2, h: 1.2, op: 1.0  },
-            { x: 0.18, y: 0.18, z: 0.05, w: 0.9, h: 0.9, op: 0.75 },
-            { x: 0.32, y: 0.32, z: 0.1,  w: 0.55, h: 0.55, op: 0.55 },
-          ];
-          offsets.forEach(o => {
-            const p = new THREE.Mesh(new THREE.PlaneGeometry(o.w, o.h), makeMat(color, o.op));
-            p.position.set(o.x, o.y, o.z);
-            group.add(p);
-          });
-          return group;
-        };
-
-        const buildVideoNode = (color) => {
-          const group = new THREE.Group();
-          // Triangle pointing right (play icon), 3D extruded as a thin prism
-          const triShape = new THREE.Shape();
-          triShape.moveTo(-0.45, -0.55);
-          triShape.lineTo(-0.45, 0.55);
-          triShape.lineTo(0.7, 0);
-          triShape.lineTo(-0.45, -0.55);
-          const extrudeSettings = { depth: 0.3, bevelEnabled: false };
-          const geom = new THREE.ExtrudeGeometry(triShape, extrudeSettings);
-          geom.translate(0, 0, -0.15);
-          const tri = new THREE.Mesh(geom, makeMat(color));
-          group.add(tri);
-          return group;
-        };
-
-        const nodeBuilders = [buildResearchNode, buildCopyNode, buildArtNode, buildVideoNode];
-
-        nodeData.forEach((d, i) => {
-          const group = nodeBuilders[i](d.color);
-          group.position.set(d.x, d.y || 0, 0);
-          group.userData = { name: d.name, tool: d.tool, baseX: d.x, baseY: d.y || 0, idx: i, color: d.color };
-          aiScene.add(group);
-          nodes.push(group);
-        });
-
-        // Curved connection lines between nodes (3 connections)
-        for (let i = 0; i < nodes.length - 1; i++) {
-          const a = nodes[i].position;
-          const b = nodes[i + 1].position;
-          // Build a curved path (quadratic bezier with arch)
-          const curve = new THREE.QuadraticBezierCurve3(
-            new THREE.Vector3(a.x, a.y, a.z),
-            new THREE.Vector3((a.x + b.x) / 2, 1.4, 0), // arch up
-            new THREE.Vector3(b.x, b.y, b.z)
-          );
-          const pts = curve.getPoints(40);
-          const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
-          const lineMat = new THREE.LineBasicMaterial({
-            color: 0xffffff, transparent: true, opacity: 0.3,
-          });
-          const line = new THREE.Line(lineGeo, lineMat);
-          aiScene.add(line);
-
-          // Animated flow particles along each curve (like data flowing through pipeline)
-          const flowGeo = new THREE.BufferGeometry();
-          const flowPos = new Float32Array(8 * 3);
-          flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
-          const flowMat = new THREE.PointsMaterial({
-            color: nodeData[i + 1].color, size: 0.18, transparent: true, opacity: 0.9,
-          });
-          const flow = new THREE.Points(flowGeo, flowMat);
-          aiScene.add(flow);
-          flow.userData = { curve, baseProgress: 0, speed: 0.18 + i * 0.02 };
+  // ============== AI LAB: cards only (3D removed in v6.0) ==============
+  // Reveal pipeline banner + 4 step cards with stagger on enter viewport
+  if (!prefersReduced) {
+    const aiFlowNew = document.querySelector('.ai-flow-new');
+    if (aiFlowNew) {
+      const children = aiFlowNew.querySelectorAll('.ai-pipeline-banner, .ai-step');
+      gsap.set(children, { y: 24, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: aiFlowNew, start: 'top 90%', once: true,
+        onEnter: () => {
+          gsap.to(children, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
         }
-
-        // Scroll-driven state (0 = at first node, 1 = at last node)
-        let aiProgress = 0, aiProgressTarget = 0;
-        const stageData = [
-          { num: '01', name: '调研', k: '// 步骤 01 — 调研', v: '用 Claude Code agents 抓 <span class="serif">Reddit</span>、X、Steam 和官方频道,扫 IP lore、玩家情绪、竞品动作。' },
-          { num: '02', name: '文案', k: '// 步骤 02 — 文案', v: '按平台生成中英 <span class="serif">双语</span> 变体 —— X 推文、Reddit 长贴、Discord 公告,各对各的调性。' },
-          { num: '03', name: '视觉', k: '// 步骤 03 — 视觉', v: '主视觉、海报、社媒卡 —— <span class="serif">分钟级</span> 迭代,告别按天排期。' },
-          { num: '04', name: '视频', k: '// 步骤 04 — 视频', v: '15-30 秒动态 demo,用于方案 pitch、内部对齐、<span class="serif">创作者</span> brief。' },
-        ];
-        const stageNum = document.getElementById('aiFrameNum');
-        const stageCap = document.getElementById('aiStageCaption');
-        const stageProgress = document.getElementById('aiStageProgress');
-        let currentStage = -1;
-        const updateStage = () => {
-          const newStage = Math.min(stageData.length - 1, Math.floor(aiProgress * stageData.length * 0.999));
-          if (newStage !== currentStage) {
-            currentStage = newStage;
-            const s = stageData[currentStage];
-            if (stageNum) stageNum.textContent = `NODE ${s.num} / 04 · ${s.name}`;
-            if (stageCap) {
-              stageCap.innerHTML = `<div class="k">${s.k}</div><div class="v">${s.v}</div><small>向下滚动 → 镜头沿 4 个节点滑动。</small>`;
-            }
-            if (stageProgress) {
-              Array.from(stageProgress.children).forEach((sp, i) => {
-                sp.classList.toggle('active', i <= currentStage);
-              });
-            }
-          }
-        };
-        if (typeof ScrollTrigger !== 'undefined') {
-          ScrollTrigger.create({
-            trigger: aiStage,
-            start: 'top 70%',
-            end: 'bottom 30%',
-            onUpdate: (self) => { aiProgressTarget = self.progress; },
-          });
-        }
-
-        function animateAI() {
-          requestAnimationFrame(animateAI);
-          aiProgress += (aiProgressTarget - aiProgress) * 0.06;
-          updateStage();
-
-          // Camera glides from first node to last based on progress
-          const camX = -2.5 + aiProgress * 5; // -2.5 → 2.5
-          aiCamera.position.x += (camX - aiCamera.position.x) * 0.05;
-          // Slight vertical breath
-          aiCamera.position.y = 0.5 + Math.sin(performance.now() * 0.0005) * 0.12;
-          aiCamera.lookAt(camX + 0.83, 0.5, 0); // look toward the next node
-
-          // Each node bobs slightly + rotates
-          nodes.forEach((n, i) => {
-            n.rotation.y += 0.005;
-            n.rotation.x += 0.003;
-            n.position.y = Math.sin(performance.now() * 0.001 + i * 1.2) * 0.12;
-            // Active node = brighter — iterate children to fade all sub-meshes
-            const distToCam = Math.abs(n.userData.baseX - camX);
-            const activeFactor = Math.max(0, 1 - distToCam / 1.5);
-            n.children.forEach(child => {
-              if (child.material && child.material.opacity !== undefined) {
-                // Keep accent/text lines (white-ish) stable, only fade main colored meshes
-                if (child.material.color && child.material.color.r !== 0.98) {
-                  const base = 0.85;
-                  child.material.opacity = base + activeFactor * 0.15;
-                }
-              }
-              // Animate Research node's orbiting data points
-              if (child.userData.orbit) {
-                const o = child.userData.orbit;
-                o.angle += 0.01 * o.speed;
-                child.position.x = Math.cos(o.angle) * o.r;
-                child.position.y = Math.sin(o.angle) * o.r;
-              }
-            });
-            n.scale.setScalar(1 + activeFactor * 0.18);
-          });
-
-          // Animate flow particles along curves
-          aiScene.children.forEach(child => {
-            if (child.userData.curve) {
-              const { curve, speed } = child.userData;
-              const pos = child.geometry.attributes.position;
-              for (let p = 0; p < 8; p++) {
-                const t = ((performance.now() * 0.0005 * speed + p / 8) % 1);
-                const point = curve.getPoint(t);
-                pos.array[p * 3] = point.x;
-                pos.array[p * 3 + 1] = point.y;
-                pos.array[p * 3 + 2] = point.z;
-              }
-              pos.needsUpdate = true;
-            }
-          });
-
-          aiRenderer.render(aiScene, aiCamera);
-        }
-        animateAI();
-        window.addEventListener('resize', sizeAI);
-      }
-    } catch (e) { console.warn('AI pipeline 3D failed:', e); }
+      });
+    }
   }
 
   // ============== LOAD-IN ANIMATION ==============
@@ -2068,7 +2183,7 @@
       if (children.length > 0) {
         gsap.set(children, { y: 30, opacity: 0 });
         ScrollTrigger.create({
-          trigger: title, start: 'top 85%', once: true,
+          trigger: title, start: 'top 90%', once: true,
           onEnter: () => {
             gsap.to(children, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.04 });
           }
@@ -2100,7 +2215,7 @@
             io.unobserve(e.target);
           }
         });
-      }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+      }, { threshold: 0.15, rootMargin: '0px 0px -35% 0px' });
       els.forEach(el => io.observe(el));
     });
   } else {
@@ -2168,12 +2283,16 @@
       });
       const innerSpans = aboutText.querySelectorAll('.line span span span');
       gsap.set(innerSpans, { y: '110%' });
-      ScrollTrigger.create({
-        trigger: aboutText, start: 'top 75%', once: true,
-        onEnter: () => {
-          gsap.to(innerSpans, { y: '0%', duration: 0.8, ease: 'power4.out', stagger: 0.025 });
-        }
-      });
+      // Use IntersectionObserver — fires as soon as ANY part of the block is visible
+      const reveal = () => gsap.to(innerSpans, { y: '0%', duration: 0.8, ease: 'power4.out', stagger: 0.025 });
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) { reveal(); io.disconnect(); }
+        }, { threshold: 0.1 });
+        io.observe(aboutText);
+      } else {
+        reveal();
+      }
     }
   }
 
@@ -2181,7 +2300,7 @@
   document.querySelectorAll('[data-count]').forEach(el => {
     const target = Number(el.dataset.count);
     ScrollTrigger.create({
-      trigger: el, start: 'top 85%', once: true,
+      trigger: el, start: 'top 90%', once: true,
       onEnter: () => {
         if (prefersReduced) { el.textContent = target; return; }
         const obj = { val: 0 };
@@ -2217,26 +2336,59 @@
       gsap.set(contactTitle, { opacity: 0 });
       gsap.set(contactTitle.querySelectorAll('.char'), { y: 80, opacity: 0 });
       ScrollTrigger.create({
-        trigger: contactTitle, start: 'top 85%', once: true,
+        trigger: contactTitle, start: 'top 90%', once: true,
         onEnter: () => {
           gsap.to(contactTitle, { opacity: 1, duration: 0.1, onComplete: () => { gsap.set(contactTitle, { clearProps: 'opacity' }); } });
           gsap.to(contactTitle.querySelectorAll('.char'), { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.03 });
         }
       });
+
+      // Char-level tilt: each char tilts based on cursor position over it
+      if (!isTouch) {
+        const chars = contactTitle.querySelectorAll('.char');
+        chars.forEach(ch => {
+          ch.addEventListener('mouseenter', () => {
+            ch.classList.add('tilted');
+            const rot = (Math.random() - 0.5) * 14;
+            const lift = -(8 + Math.random() * 6);
+            ch.style.transform = `translateY(${lift}px) rotate(${rot}deg) scale(1.08)`;
+          });
+          ch.addEventListener('mouseleave', () => {
+            ch.classList.remove('tilted');
+            ch.style.transform = '';
+          });
+          // Move-follow tilt for smoother feel
+          ch.addEventListener('mousemove', (e) => {
+            const r = ch.getBoundingClientRect();
+            const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+            const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+            ch.style.transform = `translateY(${-10}px) rotateX(${dy * -16}deg) rotateY(${dx * 16}deg) scale(1.06)`;
+          });
+        });
+      }
     }
   }
 
   // ============== SECTION HEADS: stagger reveal ==============
   gsap.utils.toArray('.section-head').forEach(head => {
     if (head.querySelector('[data-split]')) return; // already handled
-    gsap.from(head.children, { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: head, start: 'top 85%', once: true } });
+    gsap.from(head.children, { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: head, start: 'top 90%', once: true } });
   });
+
+  // ============== FLOATING BREATHING ON SECTION TITLES ==============
+  // Add subtle floating motion to all section-title and big headlines for "breathing" feel.
+  if (!prefersReduced) {
+    document.querySelectorAll('.section-title, .about-headline h2').forEach((el, i) => {
+      const delay = (i % 3) * 0.7; // stagger so they don't all bob in sync
+      el.style.animation = `floatY 5.5s ease-in-out ${delay}s infinite`;
+    });
+  }
 
   // ============== CASES ==============
   if (!prefersReduced) {
     gsap.set('.case-row', { y: 30, opacity: 0 });
     ScrollTrigger.create({
-      trigger: '.case-list', start: 'top 80%', once: true,
+      trigger: '.case-list', start: 'top 90%', once: true,
       onEnter: () => { gsap.to('.case-row', { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.08 }); }
     });
   }
@@ -2245,19 +2397,12 @@
   if (!prefersReduced) {
     gsap.set('.ai-step', { y: 30, opacity: 0 });
     ScrollTrigger.create({
-      trigger: '.ai-flow', start: 'top 80%', once: true,
+      trigger: '.ai-flow', start: 'top 90%', once: true,
       onEnter: () => { gsap.to('.ai-step', { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.1 }); }
     });
   }
 
-  // ============== GAMES ==============
-  if (!prefersReduced) {
-    gsap.set('.game-cell', { y: 20, opacity: 0 });
-    ScrollTrigger.create({
-      trigger: '.games-grid', start: 'top 85%', once: true,
-      onEnter: () => { gsap.to('.game-cell', { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', stagger: 0.04 }); }
-    });
-  }
+  // ============== GAMES: removed canvas, now 6 simple HTML cards with CSS hover ==============
 
   // ============== CONTACT META (removed: was conflicting with char reveal on h2 parent) ==============
 
