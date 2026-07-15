@@ -437,71 +437,16 @@
       height: 100%;
       display: flex; align-items: center; justify-content: center;
     }
-    /* LIQUID BLOB — SVG with gooey filter for fluid morphing */
-    .liquid-svg {
+    /* LIQUID BLOB — Canvas 2D with spring physics */
+    .liquid-canvas {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 80%; height: 80%;
+      width: 88%; height: 88%;
       pointer-events: auto;
       cursor: crosshair;
       z-index: 2;
-      filter: drop-shadow(0 12px 30px rgba(255,107,74,0.25));
-    }
-    .lbl { fill: #ff6b4a; }
-    .lbl-main {
-      animation: liquidPulse 4s ease-in-out infinite;
-      transform-origin: 0 0;
-    }
-    .lbl-o1 { animation: liquidOrbit1 6s ease-in-out infinite; transform-origin: 0 0; }
-    .lbl-o2 { animation: liquidOrbit2 7s ease-in-out infinite; transform-origin: 0 0; }
-    .lbl-o3 { animation: liquidOrbit3 8s ease-in-out infinite; transform-origin: 0 0; }
-    .lbl-o4 { animation: liquidOrbit4 9s ease-in-out infinite; transform-origin: 0 0; }
-    .lbl-highlight {
-      fill: #fff;
-      opacity: 0.5;
-      animation: liquidHighlight 6s ease-in-out infinite;
-    }
-    .lbl-ripple {
-      fill: #ff6b4a;
-      animation: liquidRipple 1.2s cubic-bezier(.16,1,.3,1) forwards;
-    }
-    @keyframes liquidPulse {
-      0%, 100% { r: 38; }
-      50% { r: 41; }
-    }
-    @keyframes liquidOrbit1 {
-      0% { transform: translate(0, -52px); }
-      25% { transform: translate(48px, -20px); }
-      50% { transform: translate(30px, 40px); }
-      75% { transform: translate(-40px, 18px); }
-      100% { transform: translate(0, -52px); }
-    }
-    @keyframes liquidOrbit2 {
-      0% { transform: translate(-58px, 5px); }
-      33% { transform: translate(20px, -50px); }
-      66% { transform: translate(45px, 30px); }
-      100% { transform: translate(-58px, 5px); }
-    }
-    @keyframes liquidOrbit3 {
-      0% { transform: translate(45px, -32px); }
-      25% { transform: translate(-25px, -50px); }
-      50% { transform: translate(-50px, 15px); }
-      75% { transform: translate(15px, 50px); }
-      100% { transform: translate(45px, -32px); }
-    }
-    @keyframes liquidOrbit4 {
-      0% { transform: translate(-30px, 50px); }
-      50% { transform: translate(50px, 25px); }
-      100% { transform: translate(-30px, 50px); }
-    }
-    @keyframes liquidHighlight {
-      0%, 100% { transform: translate(0, 0); opacity: 0.5; }
-      50% { transform: translate(2px, -2px); opacity: 0.6; }
-    }
-    @keyframes liquidRipple {
-      0% { r: 0; opacity: 1; }
-      100% { r: 80; opacity: 0; }
+      filter: drop-shadow(0 14px 36px rgba(255,107,74,0.28));
     }
     /* '04 core missions' badge in bottom-right of visual */
     .hero-mission-badge {
@@ -1507,29 +1452,8 @@
       </div>
     </div>
     <div class="hero-visual" id="heroVisual">
-      <!-- Liquid blob — SVG with gooey filter + click ripples (added by JS) -->
-      <svg class="liquid-svg" id="liquidSvg" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <filter id="gooey">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-            <feColorMatrix in="blur" type="matrix" values="
-              1 0 0 0 0
-              0 1 0 0 0
-              0 0 1 0 0
-              0 0 0 22 -10" result="gooey" />
-            <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
-          </filter>
-        </defs>
-        <g id="liquidGroup" filter="url(#gooey)">
-          <circle class="lbl lbl-main" cx="0" cy="0" r="38" />
-          <circle class="lbl lbl-o1" cx="0" cy="0" r="9" />
-          <circle class="lbl lbl-o2" cx="0" cy="0" r="7" />
-          <circle class="lbl lbl-o3" cx="0" cy="0" r="6" />
-          <circle class="lbl lbl-o4" cx="0" cy="0" r="5" />
-        </g>
-        <!-- white highlight on main ball -->
-        <ellipse class="lbl-highlight" cx="-12" cy="-15" rx="9" ry="6" />
-      </svg>
+      <!-- Liquid blob — Canvas 2D with spring physics + click impact -->
+      <canvas id="liquidCanvas" class="liquid-canvas" aria-label="Interactive liquid blob"></canvas>
       <div class="hero-mission-badge">
         <span class="num">04</span>
         <span class="lbl">core missions</span>
@@ -2237,89 +2161,203 @@
       });
     });
 
-    // ============== LIQUID BLOB INTERACTIVITY ==============
-    // Click on the SVG → spawn a ripple circle that expands and fades.
-    // Also briefly deforms the main blob toward the click point.
-    // Drag inside → stretch the main blob toward the cursor (springy).
-    const liquidSvg = document.getElementById('liquidSvg');
-    if (liquidSvg && !prefersReduced) {
-      const group = liquidSvg.querySelector('#liquidGroup');
-      const mainCircle = liquidSvg.querySelector('.lbl-main');
-      const svgNS = 'http://www.w3.org/2000/svg';
+    // ============== LIQUID BLOB — Canvas 2D with spring physics ==============
+    // Real liquid feel via:
+    //   - 24 control points around a circle, each with rest position + velocity
+    //   - Each point pulled toward rest (surface tension)
+    //   - Each point connected to 2 neighbors (shape integrity)
+    //   - Ambient noise → natural continuous morphing
+    //   - Click → impulse pushes nearest points INWARD (depression), then they spring back,
+    //     propagating the wave around the blob via the neighbor springs
+    const liquidCanvas = document.getElementById('liquidCanvas');
+    if (liquidCanvas && isDesktop) {
+      const ctx = liquidCanvas.getContext('2d', { alpha: true });
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Convert client coordinates to SVG viewBox coordinates (-100..100)
-      function clientToSvg(clientX, clientY) {
-        const rect = liquidSvg.getBoundingClientRect();
-        const x = ((clientX - rect.left) / rect.width) * 200 - 100;
-        const y = ((clientY - rect.top) / rect.height) * 200 - 100;
-        return { x, y };
-      }
+      // Geometry — control points in CANVAS coordinates
+      const N = 24;  // number of control points
+      const baseR = 130;  // base radius in canvas pixels
+      const points = [];
+      const rest = [];
 
-      // Spawn an expanding ripple at the click point — gets absorbed by gooey filter
-      function spawnRipple(x, y) {
-        const c = document.createElementNS(svgNS, 'circle');
-        c.setAttribute('cx', x);
-        c.setAttribute('cy', y);
-        c.setAttribute('r', 0);
-        c.setAttribute('class', 'lbl-ripple');
-        group.appendChild(c);
-        // Remove after animation completes
-        setTimeout(() => c.remove(), 1300);
-      }
-
-      // Briefly scale up the main blob (splash effect)
-      function splashMain() {
-        if (!mainCircle) return;
-        mainCircle.style.transition = 'transform .15s cubic-bezier(.16,1,.3,1)';
-        mainCircle.style.transformOrigin = '0 0';
-        mainCircle.style.transform = 'scale(1.18)';
-        setTimeout(() => {
-          mainCircle.style.transform = 'scale(1)';
-        }, 180);
-      }
-
-      // Click → ripple + splash
-      liquidSvg.addEventListener('click', (e) => {
-        const p = clientToSvg(e.clientX, e.clientY);
-        spawnRipple(p.x, p.y);
-        splashMain();
-        // Add a small additional blob that flies into the main blob
-        const blob = document.createElementNS(svgNS, 'circle');
-        blob.setAttribute('cx', p.x);
-        blob.setAttribute('cy', p.y);
-        blob.setAttribute('r', 5);
-        blob.setAttribute('class', 'lbl');
-        blob.style.transition = 'transform .9s cubic-bezier(.34,1.56,.64,1), opacity .9s ease';
-        group.appendChild(blob);
-        // Force reflow then animate
-        requestAnimationFrame(() => {
-          blob.style.transform = 'translate(' + (-p.x) + 'px, ' + (-p.y) + 'px) scale(0)';
-          blob.style.opacity = '0';
-        });
-        setTimeout(() => blob.remove(), 1000);
-      });
-
-      // Hover → follow cursor with a small offset blob
-      let hoverBlob = null;
-      liquidSvg.addEventListener('mousemove', (e) => {
-        const p = clientToSvg(e.clientX, e.clientY);
-        if (!hoverBlob) {
-          hoverBlob = document.createElementNS(svgNS, 'circle');
-          hoverBlob.setAttribute('r', 4);
-          hoverBlob.setAttribute('class', 'lbl');
-          hoverBlob.style.opacity = '0.6';
-          group.appendChild(hoverBlob);
+      function setupSize() {
+        const rect = liquidCanvas.getBoundingClientRect();
+        liquidCanvas.width = rect.width * dpr;
+        liquidCanvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        // Rest positions: circle centered in canvas, with a tiny noise to feel organic
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        for (let i = 0; i < N; i++) {
+          const angle = (i / N) * Math.PI * 2;
+          const r = baseR + (Math.sin(i * 1.7) * 4);  // tiny base noise
+          rest[i] = { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r };
+          points[i] = { x: rest[i].x, y: rest[i].y, vx: 0, vy: 0 };
         }
-        hoverBlob.setAttribute('cx', p.x);
-        hoverBlob.setAttribute('cy', p.y);
+      }
+      setupSize();
+
+      // Convert client to canvas coords
+      function clientToCanvas(clientX, clientY) {
+        const rect = liquidCanvas.getBoundingClientRect();
+        return { x: clientX - rect.left, y: clientY - rect.top };
+      }
+
+      // Apply an inward impulse at a position — pushes nearest points toward center
+      function applyImpact(cx, cy, strength) {
+        const radius = 110;
+        for (let i = 0; i < N; i++) {
+          const dx = points[i].x - cx;
+          const dy = points[i].y - cy;
+          const d = Math.hypot(dx, dy);
+          if (d < radius) {
+            // Strong inward pull (depression at click point)
+            const f = (1 - d / radius) * strength;
+            const ux = dx / (d || 1);
+            const uy = dy / (d || 1);
+            // Pull point TOWARD click → creates dent
+            points[i].vx += -ux * f * 1.2;
+            points[i].vy += -uy * f * 1.2;
+            // Slight outward push for adjacent points (ripple/wave)
+            if (d < 60) {
+              points[i].vx += ux * f * 0.3;
+              points[i].vy += uy * f * 0.3;
+            }
+          }
+        }
+      }
+
+      // Ambient noise — natural liquid movement when no interaction
+      // Use Perlin-ish multi-octave noise by sampling a sin/cos field for smooth organic motion
+      let noiseT = 0;
+      function addNoise() {
+        noiseT += 0.012;
+        for (let i = 0; i < N; i++) {
+          const ang = (i / N) * Math.PI * 2;
+          // Two-octave noise for organic flow
+          const nx = Math.sin(noiseT * 0.8 + ang * 3) * 0.10 + Math.sin(noiseT * 1.7 + ang * 5) * 0.06;
+          const ny = Math.cos(noiseT * 0.9 + ang * 3) * 0.10 + Math.cos(noiseT * 1.5 + ang * 5) * 0.06;
+          // Push in radial direction (so the blob breathes organically)
+          const radial = nx * Math.cos(ang) + ny * Math.sin(ang);
+          const tang = -nx * Math.sin(ang) + ny * Math.cos(ang);
+          points[i].vx += radial * Math.cos(ang) - tang * Math.sin(ang);
+          points[i].vy += radial * Math.sin(ang) + tang * Math.cos(ang);
+        }
+      }
+
+      // Physics step — Verlet-style with springs
+      function step() {
+        const restStiff = 0.018;     // pull toward rest position
+        const neighStiff = 0.12;     // pull toward neighbors (shape)
+        const damping = 0.91;        // velocity damping (viscous liquid)
+        const restLen = (2 * Math.PI * baseR) / N;  // ideal neighbor distance
+
+        // 1. Pull toward rest position (surface tension)
+        for (let i = 0; i < N; i++) {
+          points[i].vx += (rest[i].x - points[i].x) * restStiff;
+          points[i].vy += (rest[i].y - points[i].y) * restStiff;
+        }
+        // 2. Neighbor springs (shape integrity) — both directions
+        for (let i = 0; i < N; i++) {
+          const prev = points[(i - 1 + N) % N];
+          const next = points[(i + 1) % N];
+          // to previous
+          const dx1 = prev.x - points[i].x;
+          const dy1 = prev.y - points[i].y;
+          const d1 = Math.hypot(dx1, dy1) || 1;
+          const f1 = (d1 - restLen) * neighStiff;
+          points[i].vx += (dx1 / d1) * f1;
+          points[i].vy += (dy1 / d1) * f1;
+          // to next
+          const dx2 = next.x - points[i].x;
+          const dy2 = next.y - points[i].y;
+          const d2 = Math.hypot(dx2, dy2) || 1;
+          const f2 = (d2 - restLen) * neighStiff;
+          points[i].vx += (dx2 / d2) * f2;
+          points[i].vy += (dy2 / d2) * f2;
+        }
+        // 3. Add ambient noise (only when still)
+        addNoise();
+        // 4. Integrate + damp
+        for (let i = 0; i < N; i++) {
+          points[i].vx *= damping;
+          points[i].vy *= damping;
+          points[i].x += points[i].vx;
+          points[i].y += points[i].vy;
+        }
+      }
+
+      // Render — smooth bezier path through control points
+      function draw() {
+        const rect = liquidCanvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+        if (points.length < N) return;
+
+        // Compute smooth path using quadratic curves between midpoints (Catmull-Rom-ish)
+        ctx.beginPath();
+        for (let i = 0; i < N; i++) {
+          const p0 = points[(i - 1 + N) % N];
+          const p1 = points[i];
+          const midX = (p0.x + p1.x) / 2;
+          const midY = (p0.y + p1.y) / 2;
+          if (i === 0) ctx.moveTo(midX, midY);
+          else ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
+        }
+        ctx.closePath();
+        ctx.fillStyle = '#ff6b4a';
+        ctx.fill();
+
+        // White highlight — a small ellipse that follows the blob's center of mass
+        let cx = 0, cy = 0;
+        for (let i = 0; i < N; i++) { cx += points[i].x; cy += points[i].y; }
+        cx /= N; cy /= N;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+        ctx.beginPath();
+        ctx.ellipse(cx - 22, cy - 28, 18, 12, -0.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Animation loop
+      let lastNoise = 0;
+      function loop(t) {
+        if (liquidCanvas._killed) return;
+        // only add noise every ~80ms
+        if (t - lastNoise > 80) { lastNoise = t; }
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      // Click — physical impact at click position
+      liquidCanvas.addEventListener('mousedown', (e) => {
+        const p = clientToCanvas(e.clientX, e.clientY);
+        applyImpact(p.x, p.y, 40);
       });
-      liquidSvg.addEventListener('mouseleave', () => {
-        if (hoverBlob) {
-          hoverBlob.style.transition = 'opacity .3s';
-          hoverBlob.style.opacity = '0';
-          setTimeout(() => { if (hoverBlob) { hoverBlob.remove(); hoverBlob = null; } }, 320);
+      // Touch support
+      liquidCanvas.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        const p = clientToCanvas(touch.clientX, touch.clientY);
+        applyImpact(p.x, p.y, 40);
+        e.preventDefault();
+      }, { passive: false });
+
+      // Hover — gentle pull toward cursor (mouse gravity)
+      let lastHover = 0;
+      liquidCanvas.addEventListener('mousemove', (e) => {
+        const p = clientToCanvas(e.clientX, e.clientY);
+        // Small continuous pull, but only if close to blob surface
+        const rect = liquidCanvas.getBoundingClientRect();
+        const center = { x: rect.width / 2, y: rect.height / 2 };
+        const distFromCenter = Math.hypot(p.x - center.x, p.y - center.y);
+        if (distFromCenter < 180 && Math.random() < 0.3) {
+          applyImpact(p.x, p.y, 1.5);
         }
       });
+
+      // Resize handler
+      const ro = new ResizeObserver(() => setupSize());
+      ro.observe(liquidCanvas);
     }
   }
 
