@@ -437,48 +437,72 @@
       height: 100%;
       display: flex; align-items: center; justify-content: center;
     }
-    /* FLUID / CARTOON ball — flat solid color, organic shape, no 3D shadow */
-    .hero-droplet-core {
-      position: relative;
-      width: 62%; height: 62%;
-      background: #ff6b4a;
-      border-radius: 62% 38% 46% 54% / 53% 35% 65% 47%;
-      animation: fluidMorph 12s ease-in-out infinite;
-      z-index: 2;
-    }
-    .hero-droplet-spec {
-      position: absolute;
-      top: 30%; left: 28%;
-      width: 14%; height: 14%;
-      border-radius: 50%;
-      background: #fff;
-      opacity: 0.55;
-      z-index: 3;
-      pointer-events: none;
-      animation: fluidSpec 8s ease-in-out infinite;
-    }
-    .hero-droplet-orbit {
+    /* LIQUID BLOB — SVG with gooey filter for fluid morphing */
+    .liquid-svg {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      border: 1.5px dashed rgba(255, 107, 74, 0.28);
-      border-radius: 50%;
-      pointer-events: none;
+      width: 80%; height: 80%;
+      pointer-events: auto;
+      cursor: crosshair;
+      z-index: 2;
+      filter: drop-shadow(0 12px 30px rgba(255,107,74,0.25));
     }
-    .hero-droplet-orbit-1 { width: 75%; height: 75%; animation: orbitSpin 60s linear infinite; }
-    .hero-droplet-orbit-2 { width: 90%; height: 90%; border-color: rgba(99, 102, 241, 0.22); animation: orbitSpin 90s linear infinite reverse; }
-    .hero-droplet-orbit-3 { width: 108%; height: 108%; border-color: rgba(10, 10, 10, 0.12); animation: orbitSpin 120s linear infinite; }
-    .hero-droplet-sat {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 10px; height: 10px;
-      border-radius: 50%;
+    .lbl { fill: #ff6b4a; }
+    .lbl-main {
+      animation: liquidPulse 4s ease-in-out infinite;
       transform-origin: 0 0;
-      pointer-events: none;
     }
-    .hero-droplet-sat-black { background: var(--ink); animation: orbitBlack 18s linear infinite; }
-    .hero-droplet-sat-blue { background: var(--violet); animation: orbitBlue 22s linear infinite reverse; }
-    .hero-droplet-sat-coral { background: var(--coral); animation: orbitCoral 26s linear infinite; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--coral); width: 12px; height: 12px; }
+    .lbl-o1 { animation: liquidOrbit1 6s ease-in-out infinite; transform-origin: 0 0; }
+    .lbl-o2 { animation: liquidOrbit2 7s ease-in-out infinite; transform-origin: 0 0; }
+    .lbl-o3 { animation: liquidOrbit3 8s ease-in-out infinite; transform-origin: 0 0; }
+    .lbl-o4 { animation: liquidOrbit4 9s ease-in-out infinite; transform-origin: 0 0; }
+    .lbl-highlight {
+      fill: #fff;
+      opacity: 0.5;
+      animation: liquidHighlight 6s ease-in-out infinite;
+    }
+    .lbl-ripple {
+      fill: #ff6b4a;
+      animation: liquidRipple 1.2s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    @keyframes liquidPulse {
+      0%, 100% { r: 38; }
+      50% { r: 41; }
+    }
+    @keyframes liquidOrbit1 {
+      0% { transform: translate(0, -52px); }
+      25% { transform: translate(48px, -20px); }
+      50% { transform: translate(30px, 40px); }
+      75% { transform: translate(-40px, 18px); }
+      100% { transform: translate(0, -52px); }
+    }
+    @keyframes liquidOrbit2 {
+      0% { transform: translate(-58px, 5px); }
+      33% { transform: translate(20px, -50px); }
+      66% { transform: translate(45px, 30px); }
+      100% { transform: translate(-58px, 5px); }
+    }
+    @keyframes liquidOrbit3 {
+      0% { transform: translate(45px, -32px); }
+      25% { transform: translate(-25px, -50px); }
+      50% { transform: translate(-50px, 15px); }
+      75% { transform: translate(15px, 50px); }
+      100% { transform: translate(45px, -32px); }
+    }
+    @keyframes liquidOrbit4 {
+      0% { transform: translate(-30px, 50px); }
+      50% { transform: translate(50px, 25px); }
+      100% { transform: translate(-30px, 50px); }
+    }
+    @keyframes liquidHighlight {
+      0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+      50% { transform: translate(2px, -2px); opacity: 0.6; }
+    }
+    @keyframes liquidRipple {
+      0% { r: 0; opacity: 1; }
+      100% { r: 80; opacity: 0; }
+    }
     /* '04 core missions' badge in bottom-right of visual */
     .hero-mission-badge {
       position: absolute;
@@ -496,20 +520,6 @@
     }
     .hero-mission-badge .num { font-family: var(--font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: #fff; display: block; }
     .hero-mission-badge .lbl { font-size: 10px; color: var(--coral); letter-spacing: 0.08em; text-transform: uppercase; }
-    @keyframes fluidMorph {
-      0%, 100% { border-radius: 62% 38% 46% 54% / 53% 35% 65% 47%; transform: rotate(0deg) scale(1); }
-      25% { border-radius: 48% 52% 38% 62% / 42% 58% 47% 53%; transform: rotate(8deg) scale(1.02); }
-      50% { border-radius: 56% 44% 60% 40% / 50% 50% 55% 45%; transform: rotate(-6deg) scale(0.99); }
-      75% { border-radius: 42% 58% 52% 48% / 60% 40% 45% 55%; transform: rotate(4deg) scale(1.01); }
-    }
-    @keyframes fluidSpec {
-      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
-      50% { transform: translate(-2px, -2px) scale(1.15); opacity: 0.7; }
-    }
-    @keyframes orbitSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-    @keyframes orbitBlack { from { transform: rotate(0deg) translateX(180px); } to { transform: rotate(360deg) translateX(180px); } }
-    @keyframes orbitBlue { from { transform: rotate(120deg) translateX(220px); } to { transform: rotate(480deg) translateX(220px); } }
-    @keyframes orbitCoral { from { transform: rotate(240deg) translateX(255px); } to { transform: rotate(600deg) translateX(255px); } }
     @keyframes badgeFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-6px); }
@@ -1497,20 +1507,32 @@
       </div>
     </div>
     <div class="hero-visual" id="heroVisual">
-      <!-- Big coral droplet — the visual anchor of the entire page -->
-      <div class="hero-droplet">
-        <div class="hero-droplet-core"></div>
-        <div class="hero-droplet-spec"></div>
-        <div class="hero-droplet-orbit hero-droplet-orbit-1"></div>
-        <div class="hero-droplet-orbit hero-droplet-orbit-2"></div>
-        <div class="hero-droplet-orbit hero-droplet-orbit-3"></div>
-        <div class="hero-droplet-sat hero-droplet-sat-black"></div>
-        <div class="hero-droplet-sat hero-droplet-sat-blue"></div>
-        <div class="hero-droplet-sat hero-droplet-sat-coral"></div>
-        <div class="hero-mission-badge">
-          <span class="num">04</span>
-          <span class="lbl">core missions</span>
-        </div>
+      <!-- Liquid blob — SVG with gooey filter + click ripples (added by JS) -->
+      <svg class="liquid-svg" id="liquidSvg" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="gooey">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="
+              1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              0 0 0 22 -10" result="gooey" />
+            <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+          </filter>
+        </defs>
+        <g id="liquidGroup" filter="url(#gooey)">
+          <circle class="lbl lbl-main" cx="0" cy="0" r="38" />
+          <circle class="lbl lbl-o1" cx="0" cy="0" r="9" />
+          <circle class="lbl lbl-o2" cx="0" cy="0" r="7" />
+          <circle class="lbl lbl-o3" cx="0" cy="0" r="6" />
+          <circle class="lbl lbl-o4" cx="0" cy="0" r="5" />
+        </g>
+        <!-- white highlight on main ball -->
+        <ellipse class="lbl-highlight" cx="-12" cy="-15" rx="9" ry="6" />
+      </svg>
+      <div class="hero-mission-badge">
+        <span class="num">04</span>
+        <span class="lbl">core missions</span>
       </div>
     </div>
   </div>
@@ -2214,6 +2236,91 @@
         if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
       });
     });
+
+    // ============== LIQUID BLOB INTERACTIVITY ==============
+    // Click on the SVG → spawn a ripple circle that expands and fades.
+    // Also briefly deforms the main blob toward the click point.
+    // Drag inside → stretch the main blob toward the cursor (springy).
+    const liquidSvg = document.getElementById('liquidSvg');
+    if (liquidSvg && !prefersReduced) {
+      const group = liquidSvg.querySelector('#liquidGroup');
+      const mainCircle = liquidSvg.querySelector('.lbl-main');
+      const svgNS = 'http://www.w3.org/2000/svg';
+
+      // Convert client coordinates to SVG viewBox coordinates (-100..100)
+      function clientToSvg(clientX, clientY) {
+        const rect = liquidSvg.getBoundingClientRect();
+        const x = ((clientX - rect.left) / rect.width) * 200 - 100;
+        const y = ((clientY - rect.top) / rect.height) * 200 - 100;
+        return { x, y };
+      }
+
+      // Spawn an expanding ripple at the click point — gets absorbed by gooey filter
+      function spawnRipple(x, y) {
+        const c = document.createElementNS(svgNS, 'circle');
+        c.setAttribute('cx', x);
+        c.setAttribute('cy', y);
+        c.setAttribute('r', 0);
+        c.setAttribute('class', 'lbl-ripple');
+        group.appendChild(c);
+        // Remove after animation completes
+        setTimeout(() => c.remove(), 1300);
+      }
+
+      // Briefly scale up the main blob (splash effect)
+      function splashMain() {
+        if (!mainCircle) return;
+        mainCircle.style.transition = 'transform .15s cubic-bezier(.16,1,.3,1)';
+        mainCircle.style.transformOrigin = '0 0';
+        mainCircle.style.transform = 'scale(1.18)';
+        setTimeout(() => {
+          mainCircle.style.transform = 'scale(1)';
+        }, 180);
+      }
+
+      // Click → ripple + splash
+      liquidSvg.addEventListener('click', (e) => {
+        const p = clientToSvg(e.clientX, e.clientY);
+        spawnRipple(p.x, p.y);
+        splashMain();
+        // Add a small additional blob that flies into the main blob
+        const blob = document.createElementNS(svgNS, 'circle');
+        blob.setAttribute('cx', p.x);
+        blob.setAttribute('cy', p.y);
+        blob.setAttribute('r', 5);
+        blob.setAttribute('class', 'lbl');
+        blob.style.transition = 'transform .9s cubic-bezier(.34,1.56,.64,1), opacity .9s ease';
+        group.appendChild(blob);
+        // Force reflow then animate
+        requestAnimationFrame(() => {
+          blob.style.transform = 'translate(' + (-p.x) + 'px, ' + (-p.y) + 'px) scale(0)';
+          blob.style.opacity = '0';
+        });
+        setTimeout(() => blob.remove(), 1000);
+      });
+
+      // Hover → follow cursor with a small offset blob
+      let hoverBlob = null;
+      liquidSvg.addEventListener('mousemove', (e) => {
+        const p = clientToSvg(e.clientX, e.clientY);
+        if (!hoverBlob) {
+          hoverBlob = document.createElementNS(svgNS, 'circle');
+          hoverBlob.setAttribute('r', 4);
+          hoverBlob.setAttribute('class', 'lbl');
+          hoverBlob.style.opacity = '0.6';
+          group.appendChild(hoverBlob);
+        }
+        hoverBlob.setAttribute('cx', p.x);
+        hoverBlob.setAttribute('cy', p.y);
+      });
+      liquidSvg.addEventListener('mouseleave', () => {
+        if (hoverBlob) {
+          hoverBlob.style.transition = 'opacity .3s';
+          hoverBlob.style.opacity = '0';
+          setTimeout(() => { if (hoverBlob) { hoverBlob.remove(); hoverBlob = null; } }, 320);
+        }
+      });
+    }
   }
 
   // ============== PROGRESS BAR ==============
